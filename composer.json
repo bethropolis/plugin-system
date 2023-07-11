@@ -1,6 +1,5 @@
 {
   "name": "bethropolis/plugin-system",
-  "version": "1.0",
   "description": "A lightweight plugin manager for your PHP project",
   "type": "library",
   "license": "MIT",
