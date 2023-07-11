@@ -7,7 +7,7 @@ use Bethropolis\PluginSystem\Plugin;
 
 class Load extends Plugin{
     public function setupHooks() {
-        System::linkPluginToHook('my_hook', array($this, 'myCallback'));
+        System::linkPluginToHook('test_hook', array($this, 'myCallback'));
     }
 
     public function myCallback() {

@@ -19,6 +19,9 @@
       "Bethropolis\\PluginSystem\\": "src/"
     }
   },
+  "files": [
+    "src/"
+  ],
   "scripts": {
     "test": "./vendor/bin/phpunit tests"
   },

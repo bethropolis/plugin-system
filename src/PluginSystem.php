@@ -2,6 +2,9 @@
 
 namespace Bethropolis\PluginSystem;
 
+use Bethropolis\PluginSystem\Loader;
+
+
 class System
 {
     private static $plugins = array();
@@ -9,29 +12,38 @@ class System
 
     private static $events = array();
 
+    /**
+     * Check if a plugin class exists.
+     *
+     * @param string $className The name of the class to check.
+     * @return bool Returns true if the class exists, false otherwise.
+     */
     private static function pluginClassExists($className)
     {
         return class_exists($className);
-    }
-
-    private static function pluginAutoloader($className, $pluginsDir, $folder)
-    {
-        $classFile = $pluginsDir . $folder . '/' . $className . '.php';
-        if (file_exists($classFile)) {
-            require_once $classFile;
-        }
     }
 
     public static function setPluginsDir($dir)
     {
         self::$pluginsDir = $dir;
     }
+    public static function getPlugins()
+    {
+        return self::$plugins;
+    }
 
     public static function getPluginsDir()
     {
-       return self::$pluginsDir;
+        return self::$pluginsDir;
     }
 
+
+    /**
+     * Load plugins from a specified directory.
+     *
+     * @param string|null $dir The directory path to load plugins from. If null, uses the default plugins directory.
+     * @return bool Returns true if the plugins are successfully loaded.
+     */
     public static function loadPlugins($dir = null)
     {
         if ($dir) {
@@ -45,12 +57,12 @@ class System
 
                 if (file_exists($pluginFile)) {
                     $classAutoloader = function ($className) use ($pluginsDir, $folder) {
-                        self::pluginAutoloader($className, $pluginsDir, $folder->getFilename());
+                        Loader::pluginClassAutoloader($className, $pluginsDir, $folder->getFilename());
                     };
 
                     spl_autoload_register($classAutoloader);
 
-                    require_once $pluginFile;
+                    Loader::pluginAutoloader($pluginFile);
 
                     $pluginClass = __NAMESPACE__ . '\\' . $folder->getFilename() . 'Plugin\\Load';
                     if (self::pluginClassExists($pluginClass)) {
@@ -67,6 +79,14 @@ class System
     }
 
 
+    /**
+     * Link a plugin to a hook.
+     *
+     * @param mixed $hook     The hook to link the plugin to.
+     * @param mixed $callback The callback function to be executed when the hook is triggered.
+     *
+     * @return void
+     */
     public static function linkPluginToHook($hook, $callback)
     {
         if (!isset(self::$plugins[$hook])) {
@@ -76,6 +96,14 @@ class System
         self::$plugins[$hook][] = $callback;
     }
 
+    /**
+     * Executes a hook by calling all registered callbacks associated with it.
+     *
+     * @param string $hook The name of the hook to execute.
+     * @param string|null $pluginName The name of the plugin. Default is null.
+     * @param mixed ...$args The arguments to pass to the callbacks.
+     * @return array The return values from the callbacks.
+     */
     public static function executeHook($hook, $pluginName = null, ...$args)
     {
         $returnValues = array();
@@ -98,19 +126,32 @@ class System
         return $returnValues;
     }
 
+    /**
+     * Executes a series of hooks.
+     *
+     * @param array $hooks An array of hooks to execute.
+     * @param string|null $pluginName The name of the plugin. Defaults to null.
+     * @param mixed ...$args Additional arguments to pass to the hooks.
+     * @return array An array of return values from the executed hooks.
+     */
     public static function executeHooks(array $hooks, $pluginName = null, ...$args)
     {
 
         $returnValues = array();
         foreach ($hooks as $hook) {
             $returnValue = self::executeHook($hook, $pluginName, ...$args);
-            if ($returnValue !== null) {
-                $returnValues[] = $returnValue;
+            if (!empty($returnValue)) {
+                $returnValues[$hook] = $returnValue;
             }
         }
         return $returnValues;
     }
 
+    /**
+     * Registers an event.
+     *
+     * @param mixed $eventName The name of the event to register.
+     */
     public static function registerEvent($eventName)
     {
         if (!isset(self::$events[$eventName])) {
@@ -118,6 +159,13 @@ class System
         }
     }
 
+    /**
+     * Adds an action to the event specified by $eventName.
+     *
+     * @param mixed $eventName The name of the event.
+     * @param mixed $callback The callback function to be executed when the event is triggered.
+     * @return void
+     */
     public static function addAction($eventName, $callback)
     {
         if (isset(self::$events[$eventName])) {
@@ -125,12 +173,25 @@ class System
         }
     }
 
+ 
+    /**
+     * Triggers an event and calls all registered callbacks for that event.
+     *
+     * @param string $eventName The name of the event to trigger.
+     * @param mixed ...$args Additional arguments to pass to the callbacks.
+     * @return array The return values from the callbacks, if any.
+     */
     public static function triggerEvent($eventName, ...$args)
     {
+        $returnValues = array();
         if (isset(self::$events[$eventName])) {
             foreach (self::$events[$eventName] as $callback) {
-                call_user_func_array($callback, $args);
+              $returnValue = call_user_func_array($callback, $args);
+              if ($returnValue !== null) {
+                $returnValues[] = $returnValue;
+              }
             }
         }
+        return $returnValues;
     }
 }

@@ -7,13 +7,14 @@ use Bethropolis\PluginSystem\Plugin;
 
 class Load extends Plugin
 {
+    protected  $name = "dis app";
     public function setupHooks()
     {
-        System::linkPluginToHook('my_hook', array($this, 'myCallback'));
+        System::linkPluginToHook('other_hook', array($this, 'myCallback'));
     }
 
     public function myCallback()
     {
-        return 'My other callback';
+        return $this->getInfo();
     }
 }

@@ -36,5 +36,15 @@ class SystemTest extends TestCase
         $item = System::executeHook('my_hook', "Bethropolis\PluginSystem\MyPlugin\Load", "john");
         $this->assertSame($item, "hello john");
     }
-    // Write more test methods to cover other functionalities of the System class
+    
+
+ public function testExecutions()
+    {
+        $dir = __DIR__ . "/../examples/";
+        System::setPluginsDir($dir);
+        $load = System::loadPlugins();
+
+        $items = System::executeHooks(["other_hook","test_hook"],"Bethropolis\PluginSystem\AnotherPlugin\Load");
+        $this->assertIsArray($items);
+    }
 }
