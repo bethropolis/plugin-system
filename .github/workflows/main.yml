@@ -1,0 +1,22 @@
+name: PHP test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+    
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: PHPUnit (php-actions)
+      uses: php-actions/phpunit@v3
+   
