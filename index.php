@@ -1,11 +1,14 @@
 <?php 
-require_once './plugin_manager.php';
+require_once 'src\PluginSystem.php';
+require_once 'src\Plugin.php';
 
-use PluginManager\Plugin;
+use Bethropolis\PluginSystem\System;
 
-$dir = __DIR__ . "/plugins/";
-Plugin::loadPlugins($dir);
+$dir = __DIR__."/examples/";
+System::loadPlugins($dir);
 
-$item = Plugin::executeHook('my_hook',"PluginManager\MyPlugin\Load","john");
+
+
+$item = System::executeHook('my_hook',"Bethropolis\PluginSystem\MyPlugin\Load","john");
 
 print_r($item);

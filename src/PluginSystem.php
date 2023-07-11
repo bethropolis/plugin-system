@@ -1,12 +1,13 @@
 <?php
 
+namespace Bethropolis\PluginSystem;
 
-namespace PluginManager;
-
-class Plugin
+class System
 {
     private static $plugins = array();
     private static $pluginsDir;
+
+    private static $events = array();
 
     private static function pluginClassExists($className)
     {
@@ -26,11 +27,17 @@ class Plugin
         self::$pluginsDir = $dir;
     }
 
+    public static function getPluginsDir()
+    {
+       return self::$pluginsDir;
+    }
+
     public static function loadPlugins($dir = null)
     {
-        self::setPluginsDir($dir);
-
-        $pluginsDir = self::$pluginsDir ?? __DIR__ . '/plugins/';
+        if ($dir) {
+            self::setPluginsDir($dir);
+        }
+        $pluginsDir = self::$pluginsDir;
 
         foreach (new \DirectoryIterator($pluginsDir) as $folder) {
             if (!$folder->isDot() && $folder->isDir()) {
@@ -49,12 +56,14 @@ class Plugin
                     if (self::pluginClassExists($pluginClass)) {
                         $pluginInstance = new $pluginClass();
                         $pluginInstance->setupHooks();
+                        $pluginInstance->getInfo();
                     }
 
                     spl_autoload_unregister($classAutoloader);
                 }
             }
         }
+        return true;
     }
 
 
@@ -87,5 +96,41 @@ class Plugin
         }
 
         return $returnValues;
+    }
+
+    public static function executeHooks(array $hooks, $pluginName = null, ...$args)
+    {
+
+        $returnValues = array();
+        foreach ($hooks as $hook) {
+            $returnValue = self::executeHook($hook, $pluginName, ...$args);
+            if ($returnValue !== null) {
+                $returnValues[] = $returnValue;
+            }
+        }
+        return $returnValues;
+    }
+
+    public static function registerEvent($eventName)
+    {
+        if (!isset(self::$events[$eventName])) {
+            self::$events[$eventName] = array();
+        }
+    }
+
+    public static function addAction($eventName, $callback)
+    {
+        if (isset(self::$events[$eventName])) {
+            self::$events[$eventName][] = $callback;
+        }
+    }
+
+    public static function triggerEvent($eventName, ...$args)
+    {
+        if (isset(self::$events[$eventName])) {
+            foreach (self::$events[$eventName] as $callback) {
+                call_user_func_array($callback, $args);
+            }
+        }
     }
 }

@@ -1,20 +1,29 @@
 {
-    "name": "suplike/plugin-system",
-    "description": "A lightweight plugin manager for PHP",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "bethropolis",
-            "email": "bethropolis@gmail.com"
-        }
-    ],
-    "require": {
-        "php": ">=7.1.0"
-    },
-    "autoload": {
-        "files": [
-            "./plugin_manager.php"
-        ]
+  "name": "bethropolis/plugin-system",
+  "version": "1.0",
+  "description": "A lightweight plugin manager for your PHP project",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "bethropolis",
+      "email": "bethropolis@gmail.com",
+      "homepage": "https://bethropolis.github.io",
+      "role": "Founder"
     }
+  ],
+  "require": {
+    "php": "^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Bethropolis\\PluginSystem\\": "src/"
+    }
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit tests"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.2"
+  }
 }
