@@ -2,7 +2,7 @@
 
 namespace Bethropolis\PluginSystem;
 
-use Bethropolis\PluginSystem\Loader;
+use Bethropolis\PluginSystem\Autoloader;
 
 
 class System
@@ -10,8 +10,22 @@ class System
     private static $plugins = array();
     private static $pluginsDir;
 
+    private static $pluginsLoaded = array();
+
+    private static $hooks = array();
+
     private static $events = array();
 
+
+    private static function pluginClassAutoloader($className, $pluginsDir, $folder)
+    {
+        return Autoloader::pluginClassAutoloader($className, $pluginsDir, $folder);
+    }
+
+    private static function pluginAutoloader($file)
+    {
+        return Autoloader::pluginAutoloader($file);
+    }
     /**
      * Check if a plugin class exists.
      *
@@ -29,12 +43,20 @@ class System
     }
     public static function getPlugins()
     {
-        return self::$plugins;
+        return self::$pluginsLoaded;
     }
 
     public static function getPluginsDir()
     {
         return self::$pluginsDir;
+    }
+
+    public static function getEvents(){
+        return self::$events;
+    }
+
+    public static function getHooks(){
+        return self::$hooks;
     }
 
 
@@ -57,14 +79,15 @@ class System
 
                 if (file_exists($pluginFile)) {
                     $classAutoloader = function ($className) use ($pluginsDir, $folder) {
-                        Loader::pluginClassAutoloader($className, $pluginsDir, $folder->getFilename());
+                        self::pluginClassAutoloader($className, $pluginsDir, $folder->getFilename());
                     };
 
                     spl_autoload_register($classAutoloader);
 
-                    Loader::pluginAutoloader($pluginFile);
+                    self::pluginAutoloader($pluginFile);
 
                     $pluginClass = __NAMESPACE__ . '\\' . $folder->getFilename() . 'Plugin\\Load';
+                    self::$pluginsLoaded[] = $pluginClass;
                     if (self::pluginClassExists($pluginClass)) {
                         $pluginInstance = new $pluginClass();
                         $pluginInstance->setupHooks();
@@ -85,15 +108,17 @@ class System
      * @param mixed $hook     The hook to link the plugin to.
      * @param mixed $callback The callback function to be executed when the hook is triggered.
      *
-     * @return void
+     * @return bool
      */
     public static function linkPluginToHook($hook, $callback)
     {
         if (!isset(self::$plugins[$hook])) {
+            self::$hooks[$hook] = array();
             self::$plugins[$hook] = array();
         }
 
         self::$plugins[$hook][] = $callback;
+        return true;
     }
 
     /**
@@ -159,6 +184,11 @@ class System
         }
     }
 
+    # unlink all events 
+    public static function clearEvents(){
+        self::$events = array();
+    }
+
     /**
      * Adds an action to the event specified by $eventName.
      *
@@ -173,7 +203,7 @@ class System
         }
     }
 
- 
+
     /**
      * Triggers an event and calls all registered callbacks for that event.
      *
@@ -186,10 +216,10 @@ class System
         $returnValues = array();
         if (isset(self::$events[$eventName])) {
             foreach (self::$events[$eventName] as $callback) {
-              $returnValue = call_user_func_array($callback, $args);
-              if ($returnValue !== null) {
-                $returnValues[] = $returnValue;
-              }
+                $returnValue = call_user_func_array($callback, $args);
+                if ($returnValue !== null) {
+                    $returnValues[] = $returnValue;
+                }
             }
         }
         return $returnValues;

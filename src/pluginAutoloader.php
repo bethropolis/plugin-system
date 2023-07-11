@@ -3,7 +3,7 @@
 
 namespace Bethropolis\PluginSystem;
 
-class Loader
+class Autoloader
 {
     /**
      * Autoloads a plugin file.

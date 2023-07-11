@@ -13,8 +13,8 @@ class Load extends Plugin
         System::linkPluginToHook('other_hook', array($this, 'myCallback'));
     }
 
-    public function myCallback()
+    public function myCallback($arg)
     {
-        return $this->getInfo();
+        return "hello " . $arg[0]. " ". $arg[1];
     }
 }

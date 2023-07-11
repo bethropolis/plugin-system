@@ -10,7 +10,7 @@ class Load extends Plugin{
         System::linkPluginToHook('test_hook', array($this, 'myCallback'));
     }
 
-    public function myCallback() {
-        return 'hello this is from bethro script';
+    public function myCallback($arg) {
+        return "hello $arg[0] this is from Another script";
     }
 }
