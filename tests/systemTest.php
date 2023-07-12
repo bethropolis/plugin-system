@@ -52,7 +52,7 @@ class SystemTest extends TestCase
         System::setPluginsDir(self::$dir);
         $load = System::loadPlugins();
 
-        $items = System::executeHooks(["other_hook","test_hook"],null,"john","doe");
+        $items = System::executeHooks(["other_hook", "test_hook"], null, "john", "doe");
         // $item = Array ( [other_hook] => Array ( [0] => hello john doe ) [test_hook] => Array ( [0] => hello john this is from Another script ) )
         $this->assertIsArray($items);
         $this->assertCount(2, $items);
@@ -104,5 +104,4 @@ class SystemTest extends TestCase
         $this->assertSame($items[0], "Callback 1 executed");
         $this->assertSame($items[1], "Callback 2 executed");
     }
-
 }
