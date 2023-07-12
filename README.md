@@ -41,8 +41,11 @@ System::loadPlugins($dir);
 ```
 
 ## Linking Plugins to Hooks
-Plugins can be linked to hooks using the `linkPluginToHook` method. This allows you to define actions that will be executed when a particular hook is triggered:
+Plugins functions can be linked to hooks using the `linkPluginToHook` method. This allows you to define actions that will be executed when a particular hook is triggered:
 ```php
+use Bethropolis\PluginSystem\System;
+
+// Link a plugin function to a hook
 System::linkPluginToHook('my_hook', $callback);
 ```
 

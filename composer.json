@@ -1,15 +1,15 @@
 {
   "name": "bethropolis/plugin-system",
   "description": "A lightweight plugin manager for your PHP project",
+  "keywords": ["plugin", "plugin-system"],
 	"homepage": "https://github.com/bethropolis/plugin-manager",
   "type": "library",
   "license": "MIT",
   "authors": [
     {
       "name": "bethropolis",
-      "email": "bethropolis@gmail.com",
       "homepage": "https://bethropolis.github.io",
-      "role": "Founder"
+      "role": "developer"
     }
   ],
   "require": {
