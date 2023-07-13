@@ -2,15 +2,13 @@
 
 namespace Bethropolis\PluginSystem\MyPlugin;
 
-use Bethropolis\PluginSystem\System;
-use Bethropolis\PluginSystem\Plugin;
 
-class Load extends Plugin
+class Load extends \Bethropolis\PluginSystem\Plugin
 {
 
     public function setupHooks()
     {
-        System::linkPluginToHook('my_hook', array($this, 'myCallback'));
+        $this->linkHook('my_hook', array($this, 'myCallback'));
     }
 
 

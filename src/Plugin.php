@@ -1,6 +1,8 @@
 <?php
 
-namespace Bethropolis\PluginSystem; 
+namespace Bethropolis\PluginSystem;
+
+use Bethropolis\PluginSystem\System;
 
 abstract class Plugin
 {
@@ -16,5 +18,14 @@ abstract class Plugin
             'author' => $this->author,
             'description' => $this->description
         );
+    }
+
+    public function linkHook($hook, $callback = null)
+    {
+        System::linkPluginToHook($hook, $callback);
+    }
+    public function linkEvent($event, $callback = null)
+    {
+        System::addAction($event, $callback);
     }
 }

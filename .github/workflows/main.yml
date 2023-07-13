@@ -2,10 +2,9 @@ name: PHP test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
-
+    branches: ["main"]
 
 jobs:
   build-test:
@@ -24,6 +23,3 @@ jobs:
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml
           args: --no-coverage
-         
-          
-   

@@ -1,4 +1,6 @@
-# a PHP Plugin System
+# A PHP Plugin System
+[![PHP test](https://github.com/bethropolis/plugin-system/actions/workflows/main.yml/badge.svg?event=push)](https://github.com/bethropolis/plugin-system/actions/workflows/main.yml) [![CodeFactor](https://www.codefactor.io/repository/github/bethropolis/plugin-system/badge)](https://www.codefactor.io/repository/github/bethropolis/plugin-system) [![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dopecodez/Wikipedia/issues) [![GitHub version](https://badge.fury.io/gh/bethropolis%2Fplugin-system.svg)](https://badge.fury.io/gh/bethropolis%2Fplugin-system)
+
 
 This is a lightweight and flexible plugin management system.
 It allows you to easily integrate plugins into your PHP applications, providing a modular and extensible architecture.
@@ -89,4 +91,4 @@ this project was made to be a plugin management system for another one of my [pr
 
 ## License
 
-this project is released under the [MIT License](https://opensource.org/licenses/MIT). You can find more details in the [LICENSE](https://chat.openai.com/LICENSE) file.
+this project is released under the [MIT License](https://opensource.org/licenses/MIT). You can find more details in the [LICENSE](LICENSE) file.
