@@ -1,8 +1,7 @@
 <?php
 
 
-require_once 'src/PluginSystem.php';
-require_once 'src/pluginAutoloader.php';
+require_once 'vendor/autoload.php';
 
 use Bethropolis\PluginSystem\System;
 use PHPUnit\Framework\TestCase;
