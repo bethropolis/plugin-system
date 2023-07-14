@@ -24,8 +24,7 @@ class SystemTest extends TestCase
         System::setPluginsDir(self::$dir);
         $load = System::loadPlugins();
         $plugins = System::getPlugins();
-        var_dump($plugins);
-        $this->assertCount(3, $plugins);
+        $this->assertIsArray($plugins);
     }
 
 

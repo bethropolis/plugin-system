@@ -6,8 +6,8 @@ use Bethropolis\PluginSystem\Plugin;
 
 class Load extends Plugin
 {
-    protected  $name = "dis app";
-    public function setupHooks()
+    protected  $name = "another app";
+    public function initialize()
     {
         $this->linkHook('other_hook', array($this, 'myCallback'));
     }

@@ -1,14 +1,12 @@
 <?php
 
-namespace Bethropolis\PluginSystem\MyPlugin;
 
-
-class Load extends \Bethropolis\PluginSystem\Plugin
+class SingleFilePlugin extends \Bethropolis\PluginSystem\Plugin
 {
 
     public function initialize()
     {
-        $this->linkHook('my_hook', array($this, 'myCallback'));
+        $this->linkHook('js_hook', array($this, 'myCallback'));
     }
 
 

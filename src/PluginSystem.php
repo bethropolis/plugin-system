@@ -16,6 +16,11 @@ class System
 
     private static $events = array();
 
+    private static $configFile = __DIR__ . '/config/config.json';
+
+    private static $config;
+
+
 
     private static function pluginClassAutoloader($className, $pluginsDir, $folder)
     {
@@ -51,11 +56,13 @@ class System
         return self::$pluginsDir;
     }
 
-    public static function getEvents(){
+    public static function getEvents()
+    {
         return self::$events;
     }
 
-    public static function getHooks(){
+    public static function getHooks()
+    {
         return self::$hooks;
     }
 
@@ -73,24 +80,35 @@ class System
         }
         $pluginsDir = self::$pluginsDir;
 
-        foreach (new \DirectoryIterator($pluginsDir) as $folder) {
-            if (!$folder->isDot() && $folder->isDir()) {
-                $pluginFile = $pluginsDir . $folder->getFilename() . '/plugin.php';
+        foreach (new \DirectoryIterator($pluginsDir) as $fileInfo) {
+            if (!$fileInfo->isDot()) {
+                if ($fileInfo->isDir()) {
+                    $pluginFile = $fileInfo->getPathname() . '/plugin.php';
+                } else {
+                    $pluginFile = $fileInfo->getPathname();
+                }
 
                 if (file_exists($pluginFile)) {
-                    $classAutoloader = function ($className) use ($pluginsDir, $folder) {
-                        self::pluginClassAutoloader($className, $pluginsDir, $folder->getFilename());
+                    $classAutoloader = function ($className) use ($pluginsDir, $fileInfo) {
+                        self::pluginClassAutoloader($className, $pluginsDir, $fileInfo->getFilename());
                     };
 
                     spl_autoload_register($classAutoloader);
 
                     self::pluginAutoloader($pluginFile);
 
-                    $pluginClass = __NAMESPACE__ . '\\' . $folder->getFilename() . 'Plugin\\Load';
+                    if ($fileInfo->isDir()) {
+                        $pluginClass = __NAMESPACE__ . '\\' . $fileInfo->getFilename() . 'Plugin\\Load';
+                    } else {
+                        $pluginClass =  pathinfo($fileInfo->getFilename(), PATHINFO_FILENAME);
+                    }
+
+
                     self::$pluginsLoaded[] = $pluginClass;
+
                     if (self::pluginClassExists($pluginClass)) {
                         $pluginInstance = new $pluginClass();
-                        $pluginInstance->setupHooks();
+                        $pluginInstance->initialize();
                         $pluginInstance->getInfo();
                     }
 
@@ -98,14 +116,27 @@ class System
                 }
             }
         }
+        self::initialize();
         return true;
+    }
+
+
+    private static function initialize()
+    {
+        if (file_exists(self::$configFile)) {
+            $config = json_decode(file_get_contents(self::$configFile), true);
+        } else {
+            $config = array();
+        }
+
+        self::$config = $config;
     }
 
 
     /**
      * Link a plugin to a hook.
      *
-     * @param mixed $hook     The hook to link the plugin to.
+     * @param mixed $hook The hook to link the plugin to.
      * @param mixed $callback The callback function to be executed when the hook is triggered.
      *
      * @return bool
@@ -132,10 +163,15 @@ class System
     public static function executeHook($hook, $pluginName = null, ...$args)
     {
         $returnValues = array();
-
+        $plugin_status = isset(self::$config["activated_plugins"]) ? self::$config["activated_plugins"] : false;
         if (isset(self::$plugins[$hook])) {
             foreach (self::$plugins[$hook] as $callback) {
                 $callbackPluginName = get_class($callback[0]);
+
+                $checkName = stripslashes(strtolower($callbackPluginName));
+                if ($plugin_status && isset(self::$config["activated_plugins"][$checkName]) && $plugin_status[$checkName] === false) {
+                    continue;
+                }
 
                 if ($pluginName === null || $pluginName === $callbackPluginName) {
                     $returnValue = call_user_func($callback, $args);
@@ -185,7 +221,8 @@ class System
     }
 
     # unlink all events 
-    public static function clearEvents(){
+    public static function clearEvents()
+    {
         self::$events = array();
     }
 

@@ -3,6 +3,7 @@
 namespace Bethropolis\PluginSystem;
 
 use Bethropolis\PluginSystem\System;
+use Bethropolis\PluginSystem\Error;
 
 abstract class Plugin
 {
@@ -27,5 +28,13 @@ abstract class Plugin
     public function linkEvent($event, $callback = null)
     {
         System::addAction($event, $callback);
+    }
+    public function error($errorMessage, $errorLevel)
+    {
+        Error::handleError($errorMessage, $errorLevel);
+    }
+    public function exception($exception)
+    {
+        Error::handleException($exception);
     }
 }
