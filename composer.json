@@ -1,8 +1,11 @@
 {
   "name": "bethropolis/plugin-system",
   "description": "A lightweight plugin manager for your PHP project",
-  "keywords": ["plugin", "plugin-system"],
-	"homepage": "https://github.com/bethropolis/plugin-manager",
+  "keywords": [
+    "plugin",
+    "plugin-system"
+  ],
+  "homepage": "https://github.com/bethropolis/plugin-manager",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -17,12 +20,9 @@
   },
   "autoload": {
     "psr-4": {
-      "Bethropolis\\PluginSystem\\": "src"
+      "Bethropolis\\PluginSystem\\": "src/"
     }
   },
-  "files": [
-    "src/"
-  ],
   "scripts": {
     "test": "./vendor/bin/phpunit tests"
   },

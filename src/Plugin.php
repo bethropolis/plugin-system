@@ -38,3 +38,4 @@ abstract class Plugin
         Error::handleException($exception);
     }
 }
+
