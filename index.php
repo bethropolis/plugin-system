@@ -1,8 +1,5 @@
 <?php
-require_once 'src/pluginSystem.php';
-require_once 'src/pluginManager.php';
-require_once 'src/pluginAutoloader.php';
-require_once 'src/plugin.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 use Bethropolis\PluginSystem\System;
 use Bethropolis\PluginSystem\Manager;
@@ -11,7 +8,6 @@ $dir = __DIR__ . "/examples/";
 System::loadPlugins($dir);
 Manager::initialize($dir);
 Manager::installPlugin("http://localhost/compresed/addition/addition.zip");
-
 function echoNewLine($type = null)
 {
     echo "<br> --- {$type} ---:";
