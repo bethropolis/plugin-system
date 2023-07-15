@@ -1,4 +1,5 @@
 <?php
+
 // This is a manual test
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -9,11 +10,13 @@ use Bethropolis\PluginSystem\LifeCycle;
 
 $dir = __DIR__ . "/examples/";
 System::loadPlugins($dir);
+
 Manager::initialize();
 
 $life = new LifeCycle();
 Manager::installPlugin("http://localhost/compresed/addition/addition.zip");
 //Manager::uninstallPlugin("addition");
+
 function echoNewLine($type = null)
 {
     echo "<br> --- {$type} ---:";
