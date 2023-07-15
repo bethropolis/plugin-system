@@ -1,13 +1,19 @@
 <?php
+// This is a manual test
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Bethropolis\PluginSystem\System;
 use Bethropolis\PluginSystem\Manager;
+use Bethropolis\PluginSystem\LifeCycle;
 
 $dir = __DIR__ . "/examples/";
 System::loadPlugins($dir);
-Manager::initialize($dir);
+Manager::initialize();
+
+$life = new LifeCycle();
 Manager::installPlugin("http://localhost/compresed/addition/addition.zip");
+//Manager::uninstallPlugin("addition");
 function echoNewLine($type = null)
 {
     echo "<br> --- {$type} ---:";
@@ -22,7 +28,7 @@ System::addAction("file_upload", function ($item) {
     return ($item);
 });
 
-$addition = System::executeHook("calculate_addition", null, 10, 20);
+$addition = System::executeHook("calculate_addition", null);
 
 $event = System::triggerEvent("file_upload", "how are you");
 
@@ -44,3 +50,4 @@ echoNewLine("plugins");
 print_r($plugins);
 echoNewLine("hooks");
 print_r($hooks);
+

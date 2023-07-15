@@ -1,5 +1,6 @@
 /.github          export-ignore
 /examples         export-ignore
 /tests            export-ignore
-/index.php         export-ignore
+/index.php        export-ignore
 /phpunit.xml      export-ignore
+/composer.lock    export-ignore

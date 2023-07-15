@@ -4,18 +4,21 @@ namespace Bethropolis\PluginSystem;
 
 use Bethropolis\PluginSystem\System;
 use Bethropolis\PluginSystem\Error;
+use Bethropolis\PluginSystem\LifeCycle;
 
 class Manager
 {
     private static $pluginsDir;
     private static $configFile = __DIR__ . '/config/config.json';
     private static $config;
-    public static function initialize($pluginsDir = null)
+
+    private static $lifeCycle;
+    public static function initialize()
     {
-        if (!is_null($pluginsDir)) {
-            self::setPluginsDir($pluginsDir);
-        }
+        $pluginsDir = System::getPluginsDir();
+        self::setPluginsDir($pluginsDir);
         self::$config  = self::loadConfig();
+        self::$lifeCycle = new LifeCycle();
     }
     public static function setPluginsDir($dir)
     {
@@ -63,30 +66,41 @@ class Manager
             return;
         }
 
+        // Register the plugin
         $pluginName = basename($pluginDirPath);
         self::registerPlugin($pluginName);
+        self::$lifeCycle->onInstallation($pluginName);
+
         // Clean up the temporary file and register the plugin
         unlink($tempFilePath);
         return true;
     }
     public static function uninstallPlugin($pluginName)
     {
-        if (!self::pluginExists($pluginName)) {
-            throw new \Exception("Plugin does not exist.");
+        $pluginNamespace = __NAMESPACE__ . '\\' . $pluginName . "Plugin\\Load";
+        $pluginNamespace =  stripslashes(strtolower($pluginNamespace));
+
+
+
+        if (!self::pluginExists($pluginNamespace)) {
+           return Error::handleException(new \Exception("Plugin does not exist."));
         }
 
-        if (self::isPluginActive($pluginName)) {
-            throw new \Exception("Cannot uninstall an active plugin. Deactivate it first.");
+        if (self::isPluginActive($pluginNamespace)) {
+           return Error::handleException(new \Exception("Cannot uninstall an active plugin. Deactivate it first."));
         }
 
         $pluginDir = self::$pluginsDir . '/' . $pluginName;
         if (!is_dir($pluginDir)) {
-            throw new \Exception("Plugin directory not found.");
+            Error::handleException(new \Exception("Plugin directory not found."));
         }
 
         if (!self::deleteDirectory($pluginDir)) {
-            throw new \Exception("Unable to remove the plugin directory.");
+            Error::handleException(new \Exception("Unable to remove the plugin directory."));
         }
+
+        self::unregisterPlugin($pluginNamespace);
+        self::$lifeCycle->onUninstallation($pluginName);
 
         unset(self::$config['plugins'][$pluginName]);
         self::saveConfig();
@@ -118,9 +132,18 @@ class Manager
 
     public static function registerPlugin($pluginName)
     {
-        $pluginName = __NAMESPACE__ . '\\' . $pluginName . "\\Load";
         self::$config['plugins'][$pluginName] = [];
         self::$config['activated_plugins'][$pluginName] = true;
+        self::saveConfig();
+    }
+
+    public static function unregisterPlugin($pluginName)
+    {
+        // remove plugin from config file
+        $pluginName = __NAMESPACE__ . '\\' . $pluginName . "Plugin\\Load";
+        $pluginName =  stripslashes(strtolower($pluginName));
+        unset(self::$config['plugins'][$pluginName]);
+        unset(self::$config['activated_plugins'][$pluginName]);
         self::saveConfig();
     }
 
