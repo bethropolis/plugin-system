@@ -7,7 +7,7 @@ use Bethropolis\PluginSystem\Error;
 
 abstract class Plugin
 {
-    protected $name;
+    protected $name = "unnamed plugin";
     protected $version;
     protected $author;
     protected $description;
@@ -29,9 +29,9 @@ abstract class Plugin
     {
         System::addAction($event, $callback);
     }
-    public function error($errorMessage, $errorLevel)
+    public function error($errorMessage, $errorLevel = "ERROR")
     {
-        Error::handleError($errorMessage, $errorLevel);
+        Error::handleError($errorMessage,$this->name, $errorLevel);
     }
     public function exception($exception)
     {

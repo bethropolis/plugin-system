@@ -4,11 +4,13 @@ namespace Bethropolis\PluginSystem;
 
 class Error
 {
-    private $errorLogFile;
+
+    private static $errorLogFile = __DIR__ . "/errors/errors.log.txt";
 
     public function __construct($errorLogFile = null)
     {
-        self::$errorLogFile = $errorLogFile ?? __DIR__ . "/errors/errors.log.txt";
+        self::$errorLogFile = $errorLogFile;
+
     }
 
     public static function setErrorLog($file)
@@ -23,9 +25,10 @@ class Error
         file_put_contents(self::$errorLogFile, $errorLog, FILE_APPEND | LOCK_EX);
     }
 
-    public static function handleError($errorMessage,$errorLevel = "")
+
+    public static function handleError($errorMessage,$name, $errorLevel)
     {
-        $formattedError = "[Error Level: {$errorLevel}] {$errorMessage} in {$_SERVER['SCRIPT_FILENAME']}.";
+        $formattedError = "[Error Level: {$errorLevel}] {$errorMessage} From {$name} in {$_SERVER['SCRIPT_FILENAME']}.";
 
         self::logError($formattedError);
     }
