@@ -17,7 +17,7 @@ class Manager
     {
         $pluginsDir = System::getPluginsDir();
         self::setPluginsDir($pluginsDir);
-        self::$config  = self::loadConfig();
+        self::$config = self::loadConfig();
         self::$lifeCycle = new LifeCycle();
     }
     public static function setPluginsDir($dir)
@@ -78,16 +78,16 @@ class Manager
     public static function uninstallPlugin($pluginName)
     {
         $pluginNamespace = __NAMESPACE__ . '\\' . $pluginName . "Plugin\\Load";
-        $pluginNamespace =  stripslashes(strtolower($pluginNamespace));
+        $pluginNamespace = stripslashes(strtolower($pluginNamespace));
 
 
 
         if (!self::pluginExists($pluginNamespace)) {
-           return Error::handleException(new \Exception("Plugin does not exist."));
+            return Error::handleException(new \Exception("Plugin does not exist."));
         }
 
         if (self::isPluginActive($pluginNamespace)) {
-           return Error::handleException(new \Exception("Cannot uninstall an active plugin. Deactivate it first."));
+            return Error::handleException(new \Exception("Cannot uninstall an active plugin. Deactivate it first."));
         }
 
         $pluginDir = self::$pluginsDir . '/' . $pluginName;
@@ -141,7 +141,7 @@ class Manager
     {
         // remove plugin from config file
         $pluginName = __NAMESPACE__ . '\\' . $pluginName . "Plugin\\Load";
-        $pluginName =  stripslashes(strtolower($pluginName));
+        $pluginName = stripslashes(strtolower($pluginName));
         unset(self::$config['plugins'][$pluginName]);
         unset(self::$config['activated_plugins'][$pluginName]);
         self::saveConfig();

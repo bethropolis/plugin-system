@@ -76,7 +76,32 @@ System::addAction('my_event', function ($arg) {
 System::triggerEvent('my_event', ...$args);
 ```
 
-## Examples
+## plugin
+
+here is an example plugin:
+```php
+
+// eg. FILE: /plugins-folder/examplepugin.php
+
+class ExamplePlugin extends \Bethropolis\PluginSystem\Plugin
+{
+
+    public function initialize()
+    {
+        $this->linkHook('my_hook', array($this, 'myCallback'));
+    }
+
+
+
+    public function myCallback($name = [])
+    {
+        $name = array_shift($name);
+        return "hello {$name}";
+    }
+}
+```
+
+## more Examples
 
 The examples directory contains sample plugins that demonstrate the usage of the Plugin System. 
 
