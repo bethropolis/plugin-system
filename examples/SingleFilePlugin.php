@@ -6,7 +6,7 @@ class SingleFilePlugin extends \Bethropolis\PluginSystem\Plugin
 
     public function initialize()
     {
-        $this->linkHook('js_hook', array($this, 'myCallback'));
+        $this->linkHook('my_hook', array($this, 'myCallback'));
     }
 
 
