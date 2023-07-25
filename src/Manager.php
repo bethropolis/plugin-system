@@ -75,35 +75,41 @@ class Manager
         unlink($tempFilePath);
         return true;
     }
+
     public static function uninstallPlugin($pluginName)
     {
         $pluginNamespace = __NAMESPACE__ . '\\' . $pluginName . "Plugin\\Load";
         $pluginNamespace = stripslashes(strtolower($pluginNamespace));
 
 
-
         if (!self::pluginExists($pluginNamespace)) {
-            return Error::handleException(new \Exception("Plugin does not exist."));
+            Error::handleException(new \Exception("Plugin does not exist."));
+            return;
         }
 
+        self::deactivatePlugin($pluginNamespace); // hard coding it for now
+
         if (self::isPluginActive($pluginNamespace)) {
-            return Error::handleException(new \Exception("Cannot uninstall an active plugin. Deactivate it first."));
+            Error::handleException(new \Exception("Cannot uninstall an active plugin. Deactivate it first."));
+            return;
         }
 
         $pluginDir = self::$pluginsDir . '/' . $pluginName;
         if (!is_dir($pluginDir)) {
             Error::handleException(new \Exception("Plugin directory not found."));
+            return;
         }
 
         if (!self::deleteDirectory($pluginDir)) {
             Error::handleException(new \Exception("Unable to remove the plugin directory."));
+            return;
         }
 
         self::unregisterPlugin($pluginNamespace);
         self::$lifeCycle->onUninstallation($pluginName);
 
-        unset(self::$config['plugins'][$pluginName]);
         self::saveConfig();
+        return true;
     }
 
     private static function deleteDirectory($dir)
@@ -132,6 +138,8 @@ class Manager
 
     public static function registerPlugin($pluginName)
     {
+        $pluginName = __NAMESPACE__ . '\\' . $pluginName . "Plugin\\Load";
+        $pluginName = stripslashes(strtolower($pluginName));
         self::$config['plugins'][$pluginName] = [];
         self::$config['activated_plugins'][$pluginName] = true;
         self::saveConfig();
@@ -139,9 +147,6 @@ class Manager
 
     public static function unregisterPlugin($pluginName)
     {
-        // remove plugin from config file
-        $pluginName = __NAMESPACE__ . '\\' . $pluginName . "Plugin\\Load";
-        $pluginName = stripslashes(strtolower($pluginName));
         unset(self::$config['plugins'][$pluginName]);
         unset(self::$config['activated_plugins'][$pluginName]);
         self::saveConfig();
