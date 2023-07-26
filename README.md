@@ -2,20 +2,21 @@
 [![PHP test](https://github.com/bethropolis/plugin-system/actions/workflows/main.yml/badge.svg?event=push)](https://github.com/bethropolis/plugin-system/actions/workflows/main.yml) [![CodeFactor](https://www.codefactor.io/repository/github/bethropolis/plugin-system/badge)](https://www.codefactor.io/repository/github/bethropolis/plugin-system) [![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dopecodez/Wikipedia/issues) [![GitHub version](https://badge.fury.io/gh/bethropolis%2Fplugin-system.svg)](https://badge.fury.io/gh/bethropolis%2Fplugin-system)
 
 
-This is a lightweight and flexible plugin management system.
-It allows you to easily integrate plugins into your PHP applications, providing a modular and extensible architecture.
+This is a lightweight, flexible, hook and event based  plugin manager and system.
+
+It allows you to easily integrate plugins feature into your PHP applications, providing a modular and extensible architecture.
+
+
 
 ## Features
 
-- Easy integration: The plugin system is designed to be easily integrated into your existing PHP projects.
-
-- Dynamic loading: Plugins can be loaded dynamically from a specified directory.
-
-- Hook-based architecture: Plugins can be linked to hooks, allowing them to execute actions when specific events occur.
-
-- Event-driven programming: Plugins can register events and define actions to be executed when those events are triggered.
-
-- Flexible and extensible: The system provides a flexible and extensible architecture, allowing you to add and manage plugins according to your application's needs.
+- Easy integration
+- Dynamic loading
+- Hook-based architecture
+- Event-driven programming
+- Flexible and extensible
+- plugin manager included
+- plugin life cycle
 
 
 ## Installation
@@ -25,6 +26,14 @@ you will require composer to install. Run the following command in your project 
 composer require bethropolis/plugin-system
 ```
 
+you can also download the latest release and add it to your project directory.
+> not you will have to require the autoloader file into your project scripts.
+example
+```php
+require "plugin-system/src/autoload.php";
+```
+
+
 ## Usage
 
 ### Loading Plugins
@@ -33,7 +42,7 @@ To load plugins from a specific directory, use the `loadPlugins` method:
 
 ```php
 
-require "vendor/autoload.php";
+require "vendor/autoload.php"; // for download installed method just replace this line with the autoloader.
 
 use Bethropolis\PluginSystem\System;
 
@@ -78,7 +87,7 @@ System::triggerEvent('my_event', ...$args);
 
 ## plugin
 
-here is an example plugin:
+here is an example of a plugin:
 ```php
 
 // eg. FILE: /plugins-folder/examplepugin.php
@@ -103,7 +112,7 @@ class ExamplePlugin extends \Bethropolis\PluginSystem\Plugin
 
 ## more Examples
 
-The examples directory contains sample plugins that demonstrate the usage of the Plugin System. 
+The [examples](examples/) directory contains sample plugins that demonstrate the usage of the Plugin System. 
 
 ## Contributing
 
