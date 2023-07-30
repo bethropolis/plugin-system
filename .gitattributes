@@ -4,3 +4,5 @@
 /index.php        export-ignore
 /phpunit.xml      export-ignore
 /composer.lock    export-ignore
+/docs             export-ignore
+/docs-root        export-ignore
