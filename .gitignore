@@ -3,3 +3,4 @@ composer.phar
 /.phpunit.result.cache
 src/config/config.json
 src/errors/errors.log.txt
+
