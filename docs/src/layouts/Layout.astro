@@ -1,0 +1,43 @@
+---
+import Sidebar from '../components/Sidebar.astro';
+import Header from '../components/Header.astro';
+import List from '../components/list.astro';
+import BaseHeader from '../components/baseHeader.astro';
+interface Props {
+  title: string;
+  outline: any;
+}
+
+const { title } = Astro.props;
+let { outline } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <BaseHeader {title}/> 
+  <body class="scroll-smooth dark:bg-gray-800 dark:text-white">
+    <Header />
+    <div class="flex min-h-screen">
+      <div class="w-4/12 h-screen sticky top-0 pt-7 hidden lg:block">
+        <Sidebar />
+      </div>
+      <div class="w-full">
+        <slot />
+      </div>
+      <div class="w-4/12 h-screen sticky top-0 py-10 overflow-y-auto hidden xl:block dark:text-slate-300">
+        <List {outline} />
+      </div>
+    </div>
+  </body>
+</html>
+<style is:global>
+  /* Add any global styles here */
+  /* For example, setting font-family or base font-size */
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+</style>

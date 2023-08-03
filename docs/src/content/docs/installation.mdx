@@ -1,0 +1,52 @@
+---
+title: "Installation"
+outline: ["installation","cloning","installing","developing","deploying"]
+---
+import Codebox from "../../components/codebox.astro";
+import { githubUrl } from "../../content.ts";
+
+
+
+# Installation
+
+### cloning repository
+you'll have to first clone the repository.
+
+ <Codebox
+      tabs={["git"]}
+      codes={[`git clone ${githubUrl}.git`]} 
+    />
+
+<br/>
+
+### installing 
+you'll then install all the projects dependancies.<br/>
+you can use npm, yarn pnpm e.t.c
+
+ <Codebox
+      tabs={["npm"]}
+      codes={[`npm install`]} 
+    />
+
+
+<br/>
+
+### developing
+you'll have to run the development server for easy development.
+
+ <Codebox
+      tabs={["npm"]}
+      codes={[`npm run dev`]} 
+    />
+
+
+<br/>
+
+### deploying
+you can deploy the project to github pages or other host, simply run the build command to generate the static files.
+
+ <Codebox
+      tabs={["npm"]}
+      codes={[`npm run build`]} 
+    />
+    

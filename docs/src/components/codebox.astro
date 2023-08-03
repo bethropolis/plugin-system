@@ -1,0 +1,58 @@
+---
+interface Props {
+  tabs: string[];
+  codes: string[];
+}
+const { tabs, codes } = Astro.props;
+let activeTab = tabs[0];
+---
+
+<div class="codebox">
+  <div class="border-b border-gray-200">
+    <nav class="-mb-px flex">
+      {
+        tabs.map((tab) => (
+          <a
+            href="javascript:;"
+            id={tab}
+            class={
+              (activeTab == tab ? "border-b-2" : "") +
+              " tabs no-underline text-teal-500 border-teal-500 m-1  px-4 py-2 font-medium"
+            }
+          >
+            {tab}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+  <pre
+    style="background-color: #24292e; overflow-x: auto;"
+    class="text-slate-50"
+    tabindex="0">{
+        codes.map((item, index) => (
+  <code id={`${tabs.findIndex((tab) => tab === tabs[index])}`} style={activeTab == tabs[index] ? "":"display: none"} 
+    class="px-4 py-2 text-sm !text-slate-300">{item}</code>
+        ))
+        }</pre>
+</div>
+
+<script>
+  const tabButtons = document.querySelectorAll(".codebox .tabs");
+  const codes = document.querySelectorAll(".codebox code");
+
+  tabButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      tabButtons.forEach((btn, i) => {
+        btn.classList.remove("border-b-2");
+        codes[i].style.display = "none";
+      });
+      button.classList.add("border-b-2");
+      codes[index].style.display = "block";
+    });
+  });
+</script>
+
+<style>
+
+</style>

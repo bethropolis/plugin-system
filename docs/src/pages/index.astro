@@ -1,0 +1,62 @@
+---
+import BaseHeader from "../components/baseHeader.astro";
+import Header from "../components/Header.astro";
+
+---
+
+<BaseHeader  title="Gena documentation template"/>
+<style>
+    .hero {
+      background-color: #f9fafb;
+      @apply dark:bg-gray-800;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: bold;
+      color: #1a202c;
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      color: #4a5568;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-radius: 0.5rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      @apply bg-green-500;
+    }
+
+    .image {
+  
+      background-color: #f9fafb;
+      background-image: url('/icon.svg');
+      background-size: cover;
+      background-position: center;
+      height: calc(100vh - 50px);
+    }
+  </style>
+
+
+<Header/>
+  <div class="flex flex-col md:flex-row">
+    <div class="image w-full md:w-1/2 dark:bg-gray-800"></div>
+    <div class="hero w-full md:w-1/2 flex items-center justify-center px-4 py-8 md:px-8 md:py-16">
+      <div class="text-center">
+        <h1 class="mb-4 dark:text-slate-200">Gena Docs Template</h1>
+        <p class="mb-8 dark:text-slate-500">this is an already setup template to help you create docs faster.</p>
+        <a href="./docs/introduction" class="btn bg-green-300">Get Started</a>
+      </div>
+
+      
+    </div>
+  </div>
