@@ -1,0 +1,27 @@
+---
+interface Props {
+  outline: string[];
+}
+
+const { outline } = Astro.props;
+---
+
+<script>
+  // client script
+</script>
+<div class="sidebar p-4 w-full h-full">
+  <ul class="space-y-2">
+    {
+      outline &&
+        outline.map((item) => (
+          <li class="pl-2 border-l-2 border-gray-400 hover:border-green-400">
+            <a href={"#" + item} class="block py-1 hover:text-green-500">
+              {item.split("-").join(" ")}
+            </a>
+          </li>
+        ))
+    }
+  </ul>
+</div>
+
+<style></style>

@@ -1,0 +1,131 @@
+/*
+  The CSS in this style tag is based off of Bear Blog's default CSS.
+  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
+  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
+ */
+
+ :root {
+	--accent: #36e68e;
+	--accent-dark: #008a39;
+	--black: 15, 18, 25;
+	--gray: 96, 115, 159;
+	--gray-light: 229, 233, 240;
+	--gray-dark: 34, 41, 57;
+	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+	--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
+		0 16px 32px rgba(var(--gray), 33%);
+}
+
+body {
+	font-family: 'Atkinson', sans-serif;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	background-size: 100% 600px;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	color: rgb(var(--gray-dark));
+	font-size: 20px;
+	line-height: 1.7;
+}
+main {
+	width: 720px;
+	max-width: 100%;
+	padding: 2em 0 0 0;
+}
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+	margin: 0 0 1rem 0;
+	color: rgb(var(--black));
+	line-height: 1.2;
+    @apply text-black dark:text-slate-200;
+}
+
+.content h1 {
+	font-size: 1.75em;
+}
+
+.content h2 {
+	font-size: 1.5em;
+}
+
+.content h3 {
+	font-size: 1.17em;
+}
+
+.content h4 {
+	font-size: 1em;
+}
+
+.content h5 {
+	font-size: 0.83em;
+}
+.content strong,
+.content b {
+	font-weight: 700;
+}
+.content a {
+	color: var(--accent);
+}
+.content a:hover {
+	color: var(--accent);
+	@apply underline;
+}
+.content p {
+	margin-bottom: 1em;
+    @apply mt-2 text-lg text-gray-500 dark:text-slate-500;
+}
+.content .prose p {
+	margin-bottom: 2em;
+}
+.content textarea {
+	width: 100%;
+	font-size: 16px;
+}
+
+.content input {
+	font-size: 16px;
+}
+.content table {
+	width: 100%;
+}
+.content img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+.content code {
+	padding: 2px 5px;
+	background-color: rgb(var(--gray-light));
+	border-radius: 2px;
+	@apply dark:text-slate-700;
+}
+.content pre {
+	padding: 1.5em;
+	border-radius: 8px;
+}
+.content pre > code {
+	all: unset;
+}
+.content blockquote {
+	border-left: 4px solid var(--accent);
+	padding: 0 0 0 20px;
+	margin: 0px;
+	font-size: 1.333em;
+}
+.content hr {
+	border: none;
+	border-top: 1px solid rgb(var(--gray-light));
+}
+@media (max-width: 720px) {
+	body {
+		font-size: 18px;
+	}
+	main {
+		padding: 1em;
+	}
+}
