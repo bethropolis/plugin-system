@@ -28,8 +28,8 @@ export const sidebarStructure = [
   },
 ];
 
-export const base = "/gena";
+export const base = "/plugin-system";
 
 export const docsDir = "docs";
 
-export const githubUrl = "https://github.com/bethropolis/gena";
+export const githubUrl = "https://github.com/bethropolis/plugin-system";

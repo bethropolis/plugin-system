@@ -7,6 +7,6 @@ import mdx from "@astrojs/mdx";
 // https://astro.build/config
 export default defineConfig({
   site: "https://bethropolis.github.io",
-  base: '/gena',
+  base: '/plugin-system',
   integrations: [tailwind(), sitemap(), mdx()]
 });
