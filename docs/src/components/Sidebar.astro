@@ -9,12 +9,10 @@ const { slug } = Astro.params;
   <ul class="space-y-2">
     {
       sidebarStructure.map((item) => (
-        <>
-          <li>
-            <h5 class="mb-3 text-sm font-semibold text-slate-900 dark:text-slate-200">
+        <details open>
+            <summary class="mb-3 text-sm font-semibold text-slate-900 dark:text-slate-200">
               {item.label}
-            </h5>
-          </li>
+            </summary>
           {item.children && (
             <ul class="space-y-1">
               {item.children.map((child) => (
@@ -30,7 +28,7 @@ const { slug } = Astro.params;
               ))}
             </ul>
           )}
-        </>
+        </details>
       ))
     }
   </ul>

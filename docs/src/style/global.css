@@ -99,7 +99,7 @@ main {
 	border-radius: 8px;
 }
 .content code {
-	padding: 2px 5px;
+	padding: 1px 5px;
 	background-color: rgb(var(--gray-light));
 	border-radius: 2px;
 	@apply dark:text-slate-700;
