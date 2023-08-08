@@ -11,17 +11,19 @@ permissions:
   pages: write
   id-token: write
 
-defaults:
-  run:
-    working-directory: ./docs
+
 
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 env:
-  BUILD_PATH: "."
-
+  BUILD_PATH: "./docs"
+  
+defaults:
+  run:
+    working-directory: ./docs
+    
 jobs:
   build:
     name: Build
