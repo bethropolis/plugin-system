@@ -3,7 +3,7 @@ name: Deploy Astro site to Pages
 on:
   push:
     branches: ["main"]
-    
+
   workflow_dispatch:
 
 permissions:
@@ -11,12 +11,16 @@ permissions:
   pages: write
   id-token: write
 
+defaults:
+  run:
+    working-directory: ./docs
+
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 env:
-  BUILD_PATH: "./docs"
+  BUILD_PATH: "."
 
 jobs:
   build:
@@ -28,7 +32,6 @@ jobs:
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          cd docs
           if [ -f "${{ github.workspace }}/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
