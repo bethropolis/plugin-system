@@ -8,12 +8,16 @@ require_once __DIR__ . '/src/autoload.php';
 use Bethropolis\PluginSystem\System;
 use Bethropolis\PluginSystem\Manager;
 use Bethropolis\PluginSystem\LifeCycle;
+use Bethropolis\PluginSystem\Info;
+
 
 $dir = __DIR__ . "/examples/";
 System::loadPlugins($dir);
 
 Manager::initialize();
 
+
+$info = new Info();
 $life = new LifeCycle();
 Manager::installPlugin("http://localhost/compresed/addition/addition.zip");
 //Manager::uninstallPlugin("addition");
@@ -22,6 +26,8 @@ function echoNewLine($type = null)
 {
     echo "<br> --- {$type} ---:";
 }
+
+
 
 $item = System::executeHook('my_hook', "Bethropolis\PluginSystem\MyPlugin\Load", "john");
 $item = System::executeHook('js_hook', null, "Kirwa");
@@ -42,6 +48,10 @@ $items = System::executeHooks(["other_hook", "test_hook"], null, "john", "doe");
 
 $hooks = System::getHooks();
 
+$info->refreshPlugins();
+print_r($info->getPlugins());
+
+die();
 echoNewLine("item");
 print_r($item);
 echoNewLine("items");

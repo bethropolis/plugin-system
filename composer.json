@@ -1,6 +1,6 @@
 {
   "name": "bethropolis/plugin-system",
-  "description": "A lightweight plugin manager for your PHP project",
+  "description": "A lightweight plugin system & manager for your PHP project",
   "keywords": [
     "plugin",
     "plugin-system"

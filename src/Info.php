@@ -14,6 +14,7 @@ class Info
     {
         $this->configFilePath = __DIR__ . '/config/plugins.json';
         $this->pluginDir = System::getPluginsDir();
+        print_r( "<span style='color:green'> plugin dir:</span>".$this->pluginDir . "<br/>");
         $this->loadConfig();
     }
 
@@ -34,6 +35,7 @@ class Info
     {
         $this->config['plugins'] = [];
         $plugins = $this->scanPluginsDirectory();
+
 
         foreach ($plugins as $pluginName) {
             $pluginConfigFile = $this->pluginDir . $pluginName . '/plugin.json';
