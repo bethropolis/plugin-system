@@ -11,6 +11,8 @@
 
 
 spl_autoload_register(function ($class) {
+
+    print_r("<span style='color:blue'> loading class:</span> " . $class. "<br/>");
     // Split the class name by namespace separator
     $parts = explode('\\', $class);
 
@@ -22,6 +24,6 @@ spl_autoload_register(function ($class) {
 
     // Check if the file exists
     if (file_exists($classPath)) {
-        require_once $classPath;
+        require($classPath);
     }
 });
