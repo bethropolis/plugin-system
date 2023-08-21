@@ -19,8 +19,8 @@ const { slug } = Astro.params;
                 <li class={child.path.split("/").pop() === slug ? "active" : ""}>
                   <a
                     href={(base ?? "") + "/" + child.path}
-                    class="block py-1 pl-4 text-sm hover:text-green-500 border-l-2 border-gray-200 dark:border-gray-600
-                     hover:!border-green-400"
+                    class="block py-1 pl-4 text-sm hover:text-purple-500 border-l-2 border-gray-200 dark:border-gray-600
+                     hover:!border-purple-400"
                   >
                     {child.label}
                   </a>
@@ -36,6 +36,6 @@ const { slug } = Astro.params;
 
 <style>
   .active a {
-    @apply text-green-500 border-l-2 !border-green-500;
+    @apply text-purple-500 border-l-2 !border-purple-500;
   }
 </style>
