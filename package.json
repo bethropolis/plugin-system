@@ -1,0 +1,5 @@
+{
+    "scripts":{
+        "dev": "cd docs & npm run dev"
+    }
+}

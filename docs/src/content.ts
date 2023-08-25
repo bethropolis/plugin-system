@@ -8,8 +8,8 @@ export const sidebarStructure = [
         path: "./docs/introduction",
       },
       {
-        label: "installation",
-        path: "./docs/installation",
+        label: "making a plugin",
+        path: "./docs/making-a-plugin",
       },
     ],
   },

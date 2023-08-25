@@ -1,0 +1,53 @@
+---
+title: "Making a plugin"
+outline: [
+    "Making-a-plugin"
+]
+---
+
+# Making a plugin
+
+the plugins created using the plugin system are hook and event based.
+
+
+> you can make a single file plugin or a multi-file plugin.
+
+## single file plugin
+
+
+in a single file plugin the format is simple.
+
+##### rules:
+- a plugin must have a class name that is equal to the file name eg `ExamplePlugin.php`
+- the class must extend `\Bethropolis\PluginSystem\Plugin`
+- the class must have a public function `initialize()`
+
+<br/>
+
+```php
+class ExamplePlugin extends \Bethropolis\PluginSystem\Plugin
+{
+
+    public function initialize()
+    {
+        $this->linkHook('my_hook', array($this, 'myCallback'));
+    }
+
+    public function myCallback($name = [])
+    {
+        $name = array_shift($name);
+        return "hello {$name}";
+    }
+}
+```
+<br/>
+
+In the above example the class `ExamplePlugin` extends the `\Bethropolis\PluginSystem\Plugin` class.
+The class has a function `initialize()` which will be called when plugins are loaded.
+The `linkHook('my_hook', array($this, 'myCallback'))` function is used to link a plugin function to a hook.
+
+
+
+
+
+
