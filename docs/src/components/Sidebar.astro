@@ -16,7 +16,7 @@ const { slug } = Astro.params;
           {item.children && (
             <ul class="space-y-1">
               {item.children.map((child) => (
-                <li class={child.path.split("/").pop() === slug ? "active" : ""}>
+                <li class={child.path.split("/").pop()?.toLowerCase() === slug ? "active" : ""}>
                   <a
                     href={(base ?? "") + "/" + child.path}
                     class="block py-1 pl-4 text-sm hover:text-purple-500 border-l-2 border-gray-200 dark:border-gray-600

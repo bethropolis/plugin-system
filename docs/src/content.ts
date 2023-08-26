@@ -16,6 +16,10 @@ export const sidebarStructure = [
         path: "./docs/running-a-plugin",
       },
       {
+        label: "managing plugins",
+        path: "./docs/managing-plugins",
+      },
+      {
         label: "getting plugin info",
         path: "./docs/getting-plugin-info",
       }

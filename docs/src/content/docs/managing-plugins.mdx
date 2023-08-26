@@ -1,0 +1,66 @@
+---
+title: "Managing plugins"
+outline: [
+    "managing-plugins",
+    "Activating--Deactivating-plugins",
+    "Installing--Uninstalling-plugins",
+    "Plugin-exists",
+]
+---
+
+## Managing plugins
+
+### Activate / Deactivate plugins
+
+```php
+require "vendor/autoload.php";
+
+use Bethropolis\PluginSystem\Manager;
+
+Manager::initialize(__DIR__ . "/examples/");
+
+// activate
+Manager::activatePlugin("plugin-name");
+
+// deactivate
+Manager::deactivatePlugin("plugin-name");
+
+// toggle
+Manager::togglePlugin("plugin-name");
+```
+
+### Install / Uninstall plugins
+
+```php
+require "vendor/autoload.php";
+
+use Bethropolis\PluginSystem\Manager;
+
+Manager::initialize(__DIR__ . "/examples/");
+
+$remotePlugin = "https://example.com/addition.zip"
+// install
+Manager::installPlugin($remotePlugin);
+
+// uninstall
+Manager::uninstallPlugin("addition");
+
+// update
+Manager::updatePlugin("addition", $remotePlugin);
+```
+> The install methods extracts a multi-file plugin in the plugins directory with the same name as the name of the zip file.
+
+
+### plugin exists / is plugin active
+
+```php
+require "vendor/autoload.php";
+
+use Bethropolis\PluginSystem\Manager;
+
+Manager::initialize(__DIR__ . "/examples/");
+
+Manager::pluginExists("addition"); // returns bool
+
+Manager::isPluginActive("addition"); // returns bool 
+```
