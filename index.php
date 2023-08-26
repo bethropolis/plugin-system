@@ -2,7 +2,7 @@
 
 // This is a manual test
 
-require_once __DIR__ . '/src/autoload.php';
+require_once "vendor/autoload.php";
 ;
 
 use Bethropolis\PluginSystem\System;

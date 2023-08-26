@@ -14,11 +14,10 @@ class Info
     {
         $this->configFilePath = __DIR__ . '/config/plugins.json';
         $this->pluginDir = System::getPluginsDir();
-        print_r( "<span style='color:green'> plugin dir:</span>".$this->pluginDir . "<br/>");
         $this->loadConfig();
     }
 
-   
+
     /**
      * Loads the configuration from the config file.
      *
