@@ -8,7 +8,7 @@ import { sidebarStructure, base } from "../content";
       section.children.map((child) => (
         <a href={base + "/" + child.path}>
           <div class="bg-white rounded-xl select-none cursor-pointer shadow-lg p-3 w-11/12 md:w-64 my-2 mx-auto
-           md:m-2 dark:bg-gray-700 hover:!bg-gray-600">
+           md:m-2 dark:bg-gray-700 dark:hover:bg-gray-600 hover:bg-gray-100">
             <h2 class="text-lg font-medium mb-4">{child.label}</h2>
             <p class="text-gray-500">{section.label}</p>
           </div>

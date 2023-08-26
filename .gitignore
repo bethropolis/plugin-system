@@ -1,6 +1,5 @@
 composer.phar
 /vendor/
 /.phpunit.result.cache
-src/config/config.json
+src/config/
 src/errors/errors.log.txt
-

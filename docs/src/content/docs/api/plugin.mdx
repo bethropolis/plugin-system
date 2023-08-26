@@ -1,0 +1,59 @@
+---
+title: "Plugin api"
+file_reference: "/src/Plugin.php"
+outline: [
+    "Plugin",
+    "Class-Namespace",
+    "$this->name",
+    "$this->version",
+    "$this->description",
+    "$this->author",
+    "$this->getInfo",
+    "$this->initialize",
+    "$this->linkHook",
+    "$this->linkEvent",
+    "$this->error",
+    "$this->exception",
+]
+---
+
+## Plugin
+
+the plugin class is an abstract to all plugins to be made.
+
+### Class Namespace
+```php
+use Bethropolis\PluginSystem\Plugin;
+```
+
+### Class Methods
+
+#### `$this->name` _protected_
+> plugin name
+
+#### `$this->version ` _protected_
+> plugin version
+
+#### `$this->description` _protected_
+> plugin description
+
+#### `$this->author` _protected_
+> plugin author
+
+#### `$this->getInfo`
+> returns plugin info such as plugin name, version, description and author.
+
+#### `$this->initialize`
+> initializes the plugin, should be defined on every plugin.
+
+#### `$this->linkHook($name, $callback)`
+> links a plugin function to a hook.
+
+#### `$this->linkEvent($name, $callback)`
+> links a plugin function to an event.
+
+#### `$this->error($errorMessage, $errorLevel)`
+> logs an error.
+
+#### `$this->exception`
+> logs an exception.
