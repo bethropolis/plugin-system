@@ -29,8 +29,8 @@ body {
 	line-height: 1.7;
 }
 main {
-	width: 720px;
-	max-width: 100%;
+	width: 100%;
+	max-width: 720px;
 	padding: 2em 0 0 0;
 }
 .content h1,
@@ -112,15 +112,17 @@ main {
 	padding: 1px 5px;
 	background-color: rgb(var(--gray-light));
 	border-radius: 2px;
-	@apply dark:text-slate-700;
+	@apply dark:text-slate-700 mb-5;
 }
 
 .content pre {
 	padding: 1.5em;
 	border-radius: 8px;
+	@apply mb-6 scroll-smooth;
 }
 .content pre > code {
 	all: unset;
+
 }
 
 .content hr {

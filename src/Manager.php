@@ -18,7 +18,7 @@ class Manager
         $pluginsDir = System::getPluginsDir();
         self::setPluginsDir($pluginsDir);
         self::$config = self::loadConfig();
-        self::$lifeCycle = new LifeCycle();
+        self::$lifeCycle = new LifeCycle(); 
     }
     public static function setPluginsDir($dir)
     {

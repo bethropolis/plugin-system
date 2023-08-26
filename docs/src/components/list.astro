@@ -16,7 +16,7 @@ const { outline } = Astro.props;
       outline &&
         outline.map((item) => (
           <li class="pl-2 border-l-2 border-gray-400 hover:border-purple-400">
-            <a href={"#" + item} class="block py-1 hover:text-purple-500">
+            <a href={"#" + item.toLowerCase()} class="block py-1 hover:text-purple-500">
               {item.split("-").join(" ")}
             </a>
           </li>

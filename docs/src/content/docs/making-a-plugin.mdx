@@ -1,21 +1,24 @@
 ---
 title: "Making a plugin"
 outline: [
-    "Making-a-plugin"
+    "Making-a-plugin",
+    "Single-file-plugin",
+    "Multi-file-plugin",
+    "How-to-run-a-plugin",
 ]
 ---
 
 # Making a plugin
 
-the plugins created using the plugin system are hook and event based.
+The plugins created for the plugin system are hook and event based.
 
 
 > you can make a single file plugin or a multi-file plugin.
 
-## single file plugin
+## Single file plugin
 
 
-in a single file plugin the format is simple.
+In a single file plugin the format is simple.
 
 ##### rules:
 - a plugin must have a class name that is equal to the file name eg `ExamplePlugin.php`
@@ -42,11 +45,53 @@ class ExamplePlugin extends \Bethropolis\PluginSystem\Plugin
 ```
 <br/>
 
-In the above example the class `ExamplePlugin` extends the `\Bethropolis\PluginSystem\Plugin` class.
-The class has a function `initialize()` which will be called when plugins are loaded.
-The `linkHook('my_hook', array($this, 'myCallback'))` function is used to link a plugin function to a hook.
+
+In the above example the class `ExamplePlugin` extends the `\Bethropolis\PluginSystem\Plugin` class.The class has a function `initialize()` which will be called when plugins are loaded.The `linkHook('my_hook', array($this, 'myCallback'))` function is used to link a plugin function to a hook.
 
 
+
+
+## Multi-file plugin
+
+A multi-file plugin is a plugin that contains multiple files and meant for complex apps and functionalities.
+
+##### rules:
+- all files must be in a directory
+- the directory name can be anything
+- there should be a `plugin.php` file in the directory
+- the `plugin.php` should have a namespace in the form `namespace Bethropolis\PluginSystem\{PLUGIN_FOLDER_NAME}Plugin;`
+- the `Load` class must extend `\Bethropolis\PluginSystem\Plugin`
+- the `Load` class must have a `public function initialize()`
+
+> a `plugin.json` file can be used to configure the plugin and add plugin info.
+
+<br/>
+
+```php
+# plugins/addition/plugin.php
+
+namespace Bethropolis\PluginSystem\AdditionPlugin;
+
+use Bethropolis\PluginSystem\Plugin;
+
+class Load extends Plugin {
+    public function initialize() {
+        $this->linkHook('calculate_addition', array($this, 'calculateAddition'));
+    }
+
+    public function calculateAddition($args) {
+
+        if (!isset($args[0]) || !isset($args[1])) {
+            $this->error('Invalid arguments');
+            return;
+        }
+        $result = $args[0] + $args[1];
+        return "The sum of $args[0] and $args[1] is $result";
+    }
+}
+```
+<br/>
+> you can check more examples [here](https://github.com/bethropolis/plugin-system/tree/main/examples).
 
 
 

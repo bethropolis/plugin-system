@@ -8,10 +8,43 @@ export const sidebarStructure = [
         path: "./docs/introduction",
       },
       {
-        label: "making a plugin",
+        label: "developing plugins",
         path: "./docs/making-a-plugin",
       },
+      {
+        label: "running a plugin",
+        path: "./docs/running-a-plugin",
+      },
+      {
+        label: "getting plugin info",
+        path: "./docs/getting-plugin-info",
+      }
     ],
+  },
+  {
+    label: "APIs",
+    children: [
+      {
+        label: "System",
+        path: "./docs/api/system",
+      },
+      {
+        label: "Plugin",
+        path: "./docs/api/plugin",
+      },
+      {
+        label: "manager",
+        path: "./docs/api/manager",
+      },
+      {
+        label: "Lifecycle",
+        path: "./docs/api/lifecycle",
+      },
+      {
+        label: "Info",
+        path: "./docs/api/info",
+      }
+    ]
   },
   {
     label: "other",

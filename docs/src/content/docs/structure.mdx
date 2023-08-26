@@ -6,41 +6,31 @@ outline: ["project-structure"]
 ## project structure
 
 ```
-gena/
+plugin-system/
     LICENSE
     README.md
-    astro.config.mjs
-    package-lock.json
+    composer.json
     package.json
-    tailwind.config.cjs
-    tsconfig.json
-    public/
-        cover.svg
-        favicon.svg
-        icon.svg
+    phpunit.xml
+    examples/
+    docs/
     src/
-        content.ts
-        env.d.ts
-        components/
-            Header.astro
-            Sidebar.astro
-            baseHeader.astro
-            cards.astro
-            codebox.astro
-            footer.astro
-            list.astro
-        content/
-            docs/
-                installation.mdx
-                introduction.mdx
-                structure.mdx
-        layouts/
-            Layout.astro
-        pages/
-            index.astro
-            docs/
-                [...slug].astro
-                index.astro
-        style/
-            global.css
+        config/
+            config.json
+            plugin.json
+        errors/
+            errors.log.txt
+        autoload.php
+        Autoloader.php
+        Error.php
+        Info.php
+        lifecycle.php
+        Manager.php
+        Plugin.php
+        System.php
+    test/
+    vendor/    
 ```
+
+
+above is the code structure of the plugin system.

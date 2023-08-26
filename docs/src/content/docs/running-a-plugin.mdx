@@ -1,0 +1,71 @@
+---
+title: "running a plugin"
+outline: [
+    "Making-a-plugin",
+    "Single-file-plugin",
+    "Multi-file-plugin",
+    "How-to-run-a-plugin",
+]
+---
+
+## How to run a plugin
+
+> hooks are executed and events are triggered.
+
+#### Example on executing hooks
+```php
+// index.php
+require "vendor/autoload.php";
+
+use Bethropolis\PluginSystem\System;
+
+$dir = __DIR__ . "/examples/";
+System::loadPlugins($dir);
+
+// the callbacks are defined in the "making a plugin" page
+
+$greeting = System::executeHook('my_hook', null, "john"); // returns "hello john" :array
+$addition = System::executeHook("calculate_addition", null, 4,6); // returns "The sum of 4 and 6 is 10" :array
+```
+
+
+### Example on triggering events
+```php
+// index.php
+require "vendor/autoload.php";
+
+use Bethropolis\PluginSystem\System;
+
+$dir = __DIR__ . "/examples/";
+System::loadPlugins($dir);
+
+System::registerEvent("greet");
+
+System::addAction("greet", function($name) {
+    return "hello {$name}";
+});
+
+System::triggerEvent("greet", "john"); // hello john
+```
+
+### Registering an event in a plugin
+```php
+// ExamplePlugin.php
+class ExamplePlugin extends \Bethropolis\PluginSystem\Plugin
+{
+
+    public function initialize()
+    {
+        $this->linkEvent('greet', array($this, 'myCallback'));
+    }
+
+    public function myCallback($name = [])
+    {
+        return "hello {$name}";
+    }
+}
+```
+> note that unlike a hook an event must already be registered
+
+
+

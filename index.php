@@ -42,16 +42,16 @@ $addition = System::executeHook("calculate_addition", null);
 
 $event = System::triggerEvent("file_upload", "how are you");
 
-$plugins = System::getPlugins();
+$plugins = json_encode(System::getPlugins());
 
 $items = System::executeHooks(["other_hook", "test_hook"], null, "john", "doe");
 
 $hooks = System::getHooks();
 
 $info->refreshPlugins();
-print_r($info->getPlugins());
+print_r(json_encode($info->getPlugins()));
 
-die();
+
 echoNewLine("item");
 print_r($item);
 echoNewLine("items");

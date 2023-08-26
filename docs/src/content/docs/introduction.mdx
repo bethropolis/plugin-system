@@ -3,7 +3,7 @@ title: "Installation"
 outline: [
     "About",
     "Installation",
-    "Inspirational projects"
+    "Inspirational-projects"
   ]
 ---
 
@@ -41,8 +41,12 @@ composer require bethropolis/plugin-system
 if you are facing issues with composer, you can also download the latest release and add it to your project directory.
 
 for manual installation you will have to add the autoloader file into your project scripts.
-```bash
+```php
 require "plugin-system/src/autoload.php";
+
+// for composer installed use vendor/autoload
+
+require "vendor/autoload.php";
 ```
 
 
