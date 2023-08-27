@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bethropolis.github.io/plugin-system/sitemap-index.xml
