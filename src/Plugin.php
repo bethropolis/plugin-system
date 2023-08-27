@@ -20,6 +20,8 @@ abstract class Plugin
             'description' => $this->description
         );
     }
+    
+    public function initialize(){}
 
     public function linkHook($hook, $callback = null)
     {

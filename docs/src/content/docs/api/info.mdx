@@ -1,0 +1,52 @@
+---
+title: "Info api"
+file_reference: "/src/Info.php"
+outline:
+    [
+    "Info",
+    "Class-Namespace",
+    "$this->loadConfig",
+    "$this->refreshPlugins",
+    "$this->scanPluginsDirectory",
+    "$this->addPlugin",
+    "$this->removePlugin",
+    "$this->modifyPluginData",
+    "$this->getPlugins",
+    "$this->saveConfig",
+    ]
+---
+
+## Info
+the Info class handles plugin's info from plugin.json file.
+
+### Class-Namespace
+
+```php
+use Bethropolis\PluginSystem\Info;
+```
+
+### Class Methods
+
+#### `$this->loadConfig()` _private_ 
+>  Loads the configuration from the config file.
+
+####  `$this->refreshPlugins()`
+> Refreshes the list of plugins and plugin info.
+
+####  `$this->scanPluginsDirectory()`  _private_ 
+>  Scans the plugins directory and returns an array of plugin names.
+
+#### `$this->addPlugin($pluginName, $data)`
+>  Adds a plugin to the configuration.
+
+#### `$this->removePlugin($pluginName)`
+>  Removes a plugin from the configuration.
+
+#### `$this->modifyPluginData($pluginName, $data)`
+> Modifies the plugin data for a specific plugin.
+
+#### `$this->getPlugins()`
+> Retrieves the list of plugins as an array.
+
+#### `$this->saveConfig()`
+> Saves the configuration data to a file.

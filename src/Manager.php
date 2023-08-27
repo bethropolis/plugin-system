@@ -13,9 +13,9 @@ class Manager
     private static $config;
 
     private static $lifeCycle;
-    public static function initialize()
+    public static function initialize($dir = null)
     {
-        $pluginsDir = System::getPluginsDir();
+        $pluginsDir = $dir ?? System::getPluginsDir();
         self::setPluginsDir($pluginsDir);
         self::$config = self::loadConfig();
         self::$lifeCycle = new LifeCycle();
@@ -78,18 +78,17 @@ class Manager
 
     public static function uninstallPlugin($pluginName)
     {
-        $pluginNamespace = __NAMESPACE__ . '\\' . $pluginName . "Plugin\\Load";
-        $pluginNamespace = stripslashes(strtolower($pluginNamespace));
+        $pluginNamespace = self::getpluginName($pluginName);
 
 
-        if (!self::pluginExists($pluginNamespace)) {
+        if (!self::pluginExists($pluginName)) {
             Error::handleException(new \Exception("Plugin does not exist."));
             return;
         }
 
         self::deactivatePlugin($pluginNamespace); // hard coding it for now
 
-        if (self::isPluginActive($pluginNamespace)) {
+        if (self::isPluginActive($pluginName)) {
             Error::handleException(new \Exception("Cannot uninstall an active plugin. Deactivate it first."));
             return;
         }
@@ -138,8 +137,7 @@ class Manager
 
     public static function registerPlugin($pluginName)
     {
-        $pluginName = __NAMESPACE__ . '\\' . $pluginName . "Plugin\\Load";
-        $pluginName = stripslashes(strtolower($pluginName));
+        $pluginName = self::getpluginName($pluginName);
         self::$config['plugins'][$pluginName] = [];
         self::$config['activated_plugins'][$pluginName] = true;
         self::saveConfig();
@@ -147,6 +145,7 @@ class Manager
 
     public static function unregisterPlugin($pluginName)
     {
+        $pluginName = self::getpluginName($pluginName);
         unset(self::$config['plugins'][$pluginName]);
         unset(self::$config['activated_plugins'][$pluginName]);
         self::saveConfig();
@@ -154,32 +153,58 @@ class Manager
 
     public static function activatePlugin($pluginName)
     {
-
+        $pluginName = self::getpluginName($pluginName);
         self::$config['activated_plugins'][$pluginName] = true;
-        self::saveConfig();
+        return self::saveConfig();
     }
 
     public static function deactivatePlugin($pluginName)
     {
-
+        $pluginName = self::getpluginName($pluginName);
         self::$config['activated_plugins'][$pluginName] = false;
-        self::saveConfig();
+        return self::saveConfig();
+    }
+
+    // toggle function
+    public static function togglePlugin($pluginName)
+    {
+        $pluginName = self::getpluginName($pluginName);
+        self::$config['activated_plugins'][$pluginName] = !self::$config['activated_plugins'][$pluginName];
+        return self::saveConfig();
     }
 
     public static function pluginExists($pluginName)
     {
+        $pluginName = self::getpluginName($pluginName);
 
         return isset(self::$config['plugins'][$pluginName]);
     }
 
     public static function isPluginActive($pluginName)
     {
+        $pluginName = self::getpluginName($pluginName);
         return isset(self::$config['activated_plugins'][$pluginName]) && self::$config['activated_plugins'][$pluginName];
     }
 
     public static function getPluginMetadata($pluginName)
     {
+        $pluginName = self::getpluginName($pluginName);
         return self::$config['plugins'][$pluginName] ?? null;
+    }
+
+    private static function convertNameToNamespace($pluginName)
+    {
+        return stripslashes(strtolower(__NAMESPACE__ . '\\' . $pluginName . "Plugin\\Load"));
+    }
+    private static function getpluginName($pluginName)
+    {
+        $pluginName = strtolower($pluginName);
+
+        if (isset(self::$config['plugins'][$pluginName])) {
+            return $pluginName;
+        }
+
+        return self::convertNameToNamespace($pluginName);
     }
 
     public static function updatePlugin($pluginName, $pluginUrl)
@@ -232,5 +257,6 @@ class Manager
     {
         $config = $config ?? self::$config;
         file_put_contents(self::$configFile, json_encode($config, JSON_PRETTY_PRINT));
+        return true;
     }
 }

@@ -1,4 +1,9 @@
 {
+    "name": "addition",
+    "version": "0.0.1",
+    "author": "Rafael Gomes",
+    "license": "MIT",
+    "description": "An addition plugin",
     "files": [
         {
             "target": "../index.php",

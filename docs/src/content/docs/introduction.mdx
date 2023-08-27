@@ -1,76 +1,56 @@
 ---
 title: "Installation"
-outline: ["what-is-gena" , "getting-started", "installation","configuring-the-sidebar
-", "adding-content", "deployment-and-build", "other-helpful-docs"]
+outline: [
+    "About",
+    "Installation",
+    "Inspirational-projects"
+  ]
 ---
 
-# what is gena?
-It is a ready template to help you get strarted writting documentation as quick as possible.
+# About
 
-It is built with `Astro` + `tailwindCSS` + `mdx`
+<div class="flex items-center gap-1">
+  <span>
+    [![PHP
+    test](https://github.com/bethropolis/plugin-system/actions/workflows/main.yml/badge.svg?event=push)](https://github.com/bethropolis/plugin-system/actions/workflows/main.yml)
+  </span>
+  <span>
+    [![CodeFactor](https://www.codefactor.io/repository/github/bethropolis/plugin-system/badge)](https://www.codefactor.io/repository/github/bethropolis/plugin-system)
+  </span>
+  <span>
+    [![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dopecodez/Wikipedia/issues)
+  </span>
+  <span>
+    [![GitHub
+    version](https://badge.fury.io/gh/bethropolis%2Fplugin-system.svg)](https://badge.fury.io/gh/bethropolis%2Fplugin-system)
+  </span>
+</div>
+This is a lightweight, flexible, hook and event based plugin manager and system.
 
-## getting started
+It allows you to easily integrate plugins feature into your PHP applications, providing a modular and extensible architecture.
 
-### installation
-Read the [installation guide](./installation).
 
-### configuring the sidebar
+### Installation
 
-the left sidebar is configuration is on the `src/content.ts` file. <br/>
-edit the file in order to change the content of the sidebar.
+you can simply install the plugin system by running the following command:
 
-```ts
-// src/content.ts
-export const sidebarStructure = [
-  {
-    label: "Getting Started",
-    children: [
-      {
-        label: "introduction",
-        path: "./docs/introduction",
-      },
-      {
-        label: "installation",
-        path: "./docs/installation",
-      },
-    ],
-  }
-];
+```bash
+composer require bethropolis/plugin-system
 ```
-<br/>
-configuring the right sidebar happens in the markdown/mdx file in the `content` folder.
 
-example `content/docs/introduction.mdx`.
+if you are facing issues with composer, you can also download the latest release and add it to your project directory.
 
+for manual installation you will have to add the autoloader file into your project scripts.
+```php
+require "plugin-system/src/autoload.php";
 
-```md
----
-title: "Introduction"
-outline: ["getting-started", "installation"]
----
+// for composer installed use vendor/autoload
 
-rest of the markdown...
+require "vendor/autoload.php";
 ```
-<br/>
 
-### adding content
 
-To add more content to the template, just add more `markdown\mdx` files to the `content/docs` directory.<br/> 
-The routing is done automatically by
-Astro, [read about router here](https://docs.astro.build/core-concepts/routing/).
+<br/><br/>
+### Inspirational projects
 
-note:
-> To change it from the docs directory you'll have to change `src/content.ts`
-```js
-export const docsDir = "docs";
-```
-<br/>
-
-### deployment and build
-static files are generated hence your docs can be deployed anywhere you want, [read more here](https://docs.astro.build/guides/deploy/).
-<br/>
-
-### other helpful docs
-1. [Astro](https://astro.build/)
-2. [tailwindcss](https://tailwindcss.com/)
-3. [mdx](https://mdxjs.com/)
+1. [isaeken/plugin-system](https://github.com/isaeken/plugin-system)

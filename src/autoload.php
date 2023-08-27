@@ -11,8 +11,6 @@
 
 
 spl_autoload_register(function ($class) {
-
-    print_r("<span style='color:blue'> loading class:</span> " . $class. "<br/>");
     // Split the class name by namespace separator
     $parts = explode('\\', $class);
 

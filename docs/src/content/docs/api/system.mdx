@@ -1,0 +1,56 @@
+---
+title: "System apis"
+file_reference: "/src/System.php"
+outline:
+  [
+    "System",
+    "Class-Namespace",
+    "System::loadPlugins",
+    "System::linkPluginToHook",
+    "System::executeHook",
+    "System::executeHooks",
+    "System::registerEvent",
+    "System::addAction",
+    "System::triggerEvent",
+  ]
+---
+
+## System
+
+the system class handles registering and executing hooks and events.
+
+### Class Namespace
+
+```php
+use Bethropolis\PluginSystem\System;
+```
+
+### Class Methods
+
+#### `System::loadPlugins($dir)`
+
+> Loads plugins from a specific directory.
+
+#### `System::linkPluginToHook($name, $callback)`
+
+> Links a plugin function to a hook.
+
+#### `System::executeHook($name, $pluginName, ...$args)`
+
+> Executes a hook by calling all registered callbacks associated with it.
+
+#### `System::executeHooks($names, $pluginName, ...$args)`
+
+> Executes a series of hooks.
+
+#### `System::registerEvent($name)`
+
+> Registers an event
+
+#### `System::addAction($eventName, $callback)`
+
+> Adds an action to the event specified by $eventName.
+
+#### `System::triggerEvent($name, ...$args)`
+
+> Triggers an event and calls all registered callbacks for that event.

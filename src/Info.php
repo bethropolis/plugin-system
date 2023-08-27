@@ -14,10 +14,15 @@ class Info
     {
         $this->configFilePath = __DIR__ . '/config/plugins.json';
         $this->pluginDir = System::getPluginsDir();
-        print_r( "<span style='color:green'> plugin dir:</span>".$this->pluginDir . "<br/>");
         $this->loadConfig();
     }
 
+
+    /**
+     * Loads the configuration from the config file.
+     *
+     * @throws Some_Exception_Class If the config file does not exist or is not readable.
+     */
     private function loadConfig()
     {
         if (file_exists($this->configFilePath)) {
@@ -31,6 +36,16 @@ class Info
         }
     }
 
+    /**
+     * Refreshes the list of plugins.
+     *
+     * This function clears the existing plugins in the configuration
+     * and scans the plugins directory to find new plugins. It reads
+     * the plugin configuration files and adds them to the plugin list
+     * in the configuration. Finally, it saves the updated configuration.
+     *
+     * @return void
+     */
     public function refreshPlugins()
     {
         $this->config['plugins'] = [];
@@ -48,6 +63,11 @@ class Info
         $this->saveConfig();
     }
 
+    /**
+     * Scans the plugins directory and returns an array of plugin names.
+     *
+     * @return array
+     */
     private function scanPluginsDirectory()
     {
         $plugins = [];
@@ -62,6 +82,13 @@ class Info
         return $plugins;
     }
 
+    /**
+     * Adds a plugin to the configuration.
+     *
+     * @param string $pluginName The name of the plugin.
+     * @param mixed $data The data associated with the plugin.
+     * @return bool True if the plugin was successfully added, false otherwise.
+     */
     public function addPlugin($pluginName, $data)
     {
         if (isset($this->config['plugins'][$pluginName])) {
@@ -73,12 +100,27 @@ class Info
         return true;
     }
 
+    /**
+     * Removes a plugin from the configuration.
+     *
+     * @param string $pluginName The name of the plugin to remove.
+     * @throws Some_Exception_Class If an error occurs while saving the configuration.
+     * @return void
+     */
     public function removePlugin($pluginName)
     {
         unset($this->config['plugins'][$pluginName]);
         $this->saveConfig();
     }
 
+    /**
+     * Modifies the plugin data for a specific plugin.
+     *
+     * @param string $pluginName The name of the plugin.
+     * @param array $data An array containing the data to merge with the existing plugin data.
+     * @throws Some_Exception_Class A description of the exception that can be thrown.
+     * @return void
+     */
     public function modifyPluginData($pluginName, $data)
     {
         if (isset($this->config['plugins'][$pluginName])) {
@@ -87,12 +129,22 @@ class Info
         }
     }
 
+    /**
+     * Retrieves the list of plugins.
+     *
+     * @return array The list of plugins.
+     */
     public function getPlugins()
     {
         $plugins = $this->config['plugins'] ?? [];
         return $plugins;
     }
 
+    /**
+     * Saves the configuration data to a file.
+     *
+     * @throws Some_Exception_Class If there is an error writing the file.
+     */
     private function saveConfig()
     {
         $configContents = json_encode($this->config, JSON_PRETTY_PRINT);

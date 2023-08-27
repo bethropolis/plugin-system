@@ -1,0 +1,65 @@
+---
+title: "Manager api"
+file_reference: "/src/Manager.php"
+outline: [
+    "Manager",
+    "Class-Namespace",
+    "Manager::initialize",
+    "Manager::installPlugin",
+    "Manager::uninstallPlugin",
+    "Manager::updatePlugin",
+    "Manager::loadConfig",
+    "Manager::activatePlugin",
+    "Manager::deactivatePlugin",
+]
+---
+
+## Manager
+
+the manager class handles  instalation, uninstallation and updating of plugins.
+
+### Class Namespace
+```php
+use Bethropolis\PluginSystem\Manager;
+```
+
+### Class Methods
+
+#### `Manager::initialize()`
+> initializes the manager
+
+#### `Manager::installPlugin($downloadUrl)`
+> downloads a zip file and extracts it into the plugin directory
+
+#### `Manager::uninstallPlugin($pluginName)`
+> removes a plugin from the plugins directory.
+
+#### `Manager::updatePlugin($pluginName, $pluginUrl)`
+> updates a plugin.
+
+#### `Manager::loadConfig()`
+> loads/creates the config file
+
+#### `Manager::activatePlugin($pluginName)`
+> activates a plugin
+
+#### `Manager::deactivatePlugin($pluginName)`
+> deactivates a plugin
+
+#### `Manager::togglePlugin($pluginName)`
+> toggles between plugin activation and deactivation
+
+#### `Manager::pluginExists($pluginName)`
+> checks if a plugin exists
+
+#### `Manager::isPluginActive($pluginName)`
+> checks if a plugin is active
+
+#### `Manager::getPluginMetadata($pluginName)`
+> returns the metadata of a plugin
+
+#### `Manager::saveConfig()` _private_
+> saves the config file
+
+
+

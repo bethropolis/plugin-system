@@ -1,0 +1,77 @@
+---
+title: ""
+outline: [
+    "getting-plugin-info",
+    "using-System::getPlugins",
+]
+---
+
+### Getting plugin info
+You may need plugins info maybe to display plugin information, configuration
+
+to get plugin info you will need to have a multi-file plugin with a `plugin.json` file.
+
+```php
+// index.php
+require "vendor/autoload.php";
+
+use Bethropolis\PluginSystem\System;
+use Bethropolis\PluginSystem\Info;
+
+$dir = __DIR__ . "/examples/";
+System::loadPlugins($dir);
+
+$info = new Info();
+
+$info->refreshPlugins();
+print_r(json_encode($info->getPlugins()));
+```
+
+#### OUTPUT
+```json
+{
+    "addition": {
+        "name": "addition",
+        "version": "0.0.1",
+        "author": "Rafael Gomes",
+        "license": "MIT",
+        "description": "An addition plugin",
+        "files": [
+            {
+                "target": "..\/index.php",
+                "require": "\/plugin.php"
+            }
+        ]
+    }
+}
+```
+
+> The output will be an array of installed plugins in the plugins directory. <br/>
+> Plugins listed are the one's that have a `plugin.json` file.
+
+
+### using `System::getPlugins()`
+
+This method gets the class names of the installed plugins. It works on all plugins in the plugin directory.
+
+```php
+// index.php
+require "vendor/autoload.php";
+
+use Bethropolis\PluginSystem\System;
+$dir = __DIR__ . "/examples/";
+System::loadPlugins($dir);
+
+print_r(json_encode(System::getPlugins()));
+```
+
+#### output
+```json
+[
+  "Bethropolis\\PluginSystem\\additionPlugin\\Load",
+  "Bethropolis\\PluginSystem\\anotherPlugin\\Load",
+  "Bethropolis\\PluginSystem\\bethroPlugin\\Load",
+  "Bethropolis\\PluginSystem\\myPlugin\\Load",
+  "SingleFilePlugin"
+]
+```

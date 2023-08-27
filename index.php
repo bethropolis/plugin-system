@@ -2,7 +2,7 @@
 
 // This is a manual test
 
-require_once __DIR__ . '/src/autoload.php';
+require_once "vendor/autoload.php";
 ;
 
 use Bethropolis\PluginSystem\System;
@@ -14,7 +14,7 @@ use Bethropolis\PluginSystem\Info;
 $dir = __DIR__ . "/examples/";
 System::loadPlugins($dir);
 
-Manager::initialize();
+Manager::initialize($dir);
 
 
 $info = new Info();
@@ -27,10 +27,20 @@ function echoNewLine($type = null)
     echo "<br> --- {$type} ---:";
 }
 
+function echoItem($item, $color,$text = null)
+{
+    echo "<br/>";
+    echo "<span style='color: {$color}'>{$item} </span>";
+    print_r($text);
+}
 
+echoItem(Manager::pluginExists("addition"), "red");
+echoItem(Manager::pluginExists("singlefileplugin"), "green");
+echoItem(Manager::togglePlugin("addition"), "green");
+echoItem(Manager::isPluginActive("singlefileplugin"), "blue");
 
-$item = System::executeHook('my_hook', "Bethropolis\PluginSystem\MyPlugin\Load", "john");
-$item = System::executeHook('js_hook', null, "Kirwa");
+$item = System::executeHook('my_hook', null, "john");
+
 
 
 system::registerEvent("file_upload");
@@ -38,7 +48,7 @@ System::addAction("file_upload", function ($item) {
     return ($item);
 });
 
-$addition = System::executeHook("calculate_addition", null);
+$addition = System::executeHook("calculate_addition", null, 4,5);
 
 $event = System::triggerEvent("file_upload", "how are you");
 
@@ -49,19 +59,15 @@ $items = System::executeHooks(["other_hook", "test_hook"], null, "john", "doe");
 $hooks = System::getHooks();
 
 $info->refreshPlugins();
-print_r($info->getPlugins());
 
-die();
-echoNewLine("item");
-print_r($item);
-echoNewLine("items");
-print_r($items);
-echoNewLine("addition");
-print_r($addition);
-echoNewLine("event");
-print_r($event);
-echoNewLine("plugins");
-print_r($plugins);
-echoNewLine("hooks");
-print_r($hooks);
+echoItem("info", "red",json_encode($info->getPlugins()));
+
+echoItem("item","orange",$item);
+echoItem("items","red",$items);
+echoItem("addition", "aqua", $addition);
+
+echoItem("plugins", "blue", $plugins);
+echoItem("hooks", "green", $hooks);
+
+
 

@@ -5,8 +5,8 @@
  */
 
  :root {
-	--accent: #36e68e;
-	--accent-dark: #008a39;
+	--accent: #8836e6;
+	--accent-dark: #a38cf7;
 	--black: 15, 18, 25;
 	--gray: 96, 115, 159;
 	--gray-light: 229, 233, 240;
@@ -29,8 +29,8 @@ body {
 	line-height: 1.7;
 }
 main {
-	width: 720px;
-	max-width: 100%;
+	width: 100%;
+	max-width: 720px;
 	padding: 2em 0 0 0;
 }
 .content h1,
@@ -42,7 +42,8 @@ main {
 	margin: 0 0 1rem 0;
 	color: rgb(var(--black));
 	line-height: 1.2;
-    @apply text-black dark:text-slate-200;
+	font-weight: 700;
+    @apply mt-8 mb-4 text-black dark:text-slate-200 text-2xl;
 }
 
 .content h1 {
@@ -64,6 +65,12 @@ main {
 .content h5 {
 	font-size: 0.83em;
 }
+
+.content h6 {
+	font-size: 0.67em;
+}
+
+
 .content strong,
 .content b {
 	font-weight: 700;
@@ -75,9 +82,12 @@ main {
 	color: var(--accent);
 	@apply underline;
 }
+.dark .content  a,.dark .content  a:hover {
+	color: var(--accent-dark);
+}
 .content p {
 	margin-bottom: 1em;
-    @apply mt-2 text-lg text-gray-500 dark:text-slate-500;
+    @apply mt-2 text-lg text-gray-500 dark:text-slate-500 mb-5 text-justify leading-relaxed font-normal;
 }
 .content .prose p {
 	margin-bottom: 2em;
@@ -102,25 +112,128 @@ main {
 	padding: 1px 5px;
 	background-color: rgb(var(--gray-light));
 	border-radius: 2px;
-	@apply dark:text-slate-700;
+	@apply dark:text-slate-700 mb-5;
 }
+
 .content pre {
 	padding: 1.5em;
 	border-radius: 8px;
+	@apply mb-6 scroll-smooth;
 }
 .content pre > code {
 	all: unset;
+
 }
+
+.content hr {
+	border: none;
+	border-top: 1px solid rgb(var(--gray-light));
+}
+
+.content ul, .content ol {
+	margin: 0 0 1em 0;
+	padding: 0;
+	list-style: none;
+}
+
+.content ul {
+	list-style: disc;
+}
+.content ol {
+	list-style: decimal;
+}
+
+.content li > ul,
+.content li > ol {
+	margin-bottom: 0;
+	margin-left: 1.25em;
+}
+
+.content li ul,
+.content li ol {
+	margin-bottom: 0;
+}
+
+.content li {
+	margin: 0;
+	padding: 0;
+}
+
+
+
+.content hr {
+	border: none;
+	border-top: 1px solid rgb(var(--gray-light));
+}
+
+.content img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+
+.content pre code {
+	padding: 1px 5px;
+}
+
+.content pre {
+	padding: 1.5em;
+}
+
 .content blockquote {
 	border-left: 4px solid var(--accent);
 	padding: 0 0 0 20px;
 	margin: 0px;
 	font-size: 1.333em;
 }
-.content hr {
-	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
+
+.content table,
+.content th,
+.content td {
+	border: 1px solid rgb(var(--gray-light));
+	padding: 6px 13px;
+	@apply mb-5;
 }
+
+.content th,
+.content td {
+	text-align: left;
+}
+
+.content th {
+	background-color: rgb(var(--gray-light));
+}
+
+.dark .content th {
+	background-color: rgb(var(--gray-dark));
+}
+
+.content tr:nth-child(even) {
+	background-color: rgb(var(--gray-light));
+}
+
+.dark .content tr:nth-child(even) {
+	background-color: rgb(var(--gray-dark));
+}
+
+.content details {
+	margin-bottom: 1em;
+}
+
+.content summary {
+	cursor: pointer;
+}
+
+.content summary:hover {
+	text-decoration: underline;
+}
+
+
+
+
+
+
+
 @media (max-width: 720px) {
 	body {
 		font-size: 18px;

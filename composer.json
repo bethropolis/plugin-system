@@ -3,9 +3,10 @@
   "description": "A lightweight plugin system & manager for your PHP project",
   "keywords": [
     "plugin",
-    "plugin-system"
+    "plugin-system",
+    "plugin-manager"
   ],
-  "homepage": "https://github.com/bethropolis/plugin-manager",
+  "homepage": "https://bethropolis.github.io/plugin-system/",
   "type": "library",
   "license": "MIT",
   "authors": [
