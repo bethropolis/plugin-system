@@ -1,7 +1,7 @@
 ---
 import BaseHeader from "../components/baseHeader.astro";
 import Header from "../components/Header.astro";
-
+import code from "/code.svg"
 ---
 
 <BaseHeader  title="Gena documentation template"/>
@@ -53,7 +53,7 @@ import Header from "../components/Header.astro";
 <Header/>
   <div class="flex flex-col-reverse md:flex-row">
     <div class="side w-full  md:w-1/2 flex justify-center items-center dark:bg-gray-800">
-     <img class="image" src="/code.svg" alt="">
+     <img class="image" src={code} alt="simple plugin">
     </div>
     <div class="hero w-full md:w-1/2 flex items-center justify-center px-4 py-8 md:px-8 md:py-16">
       <div class="text-center">

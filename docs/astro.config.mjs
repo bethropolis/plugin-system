@@ -8,5 +8,5 @@ import mdx from "@astrojs/mdx";
 export default defineConfig({
   site: "https://bethropolis.github.io",
   base: '/plugin-system',
-  integrations: [tailwind(), sitemap(), mdx()]
+  integrations: [tailwind(), mdx(), sitemap()]
 });
