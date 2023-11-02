@@ -27,7 +27,7 @@ composer require bethropolis/plugin-system
 ```
 
 you can also download the latest release and add it to your project directory.
-> not you will have to require the autoloader file into your project scripts.
+> note that if you do this you will have to require the autoloader file into your project scripts.
 example
 ```php
 require "plugin-system/src/autoload.php";
