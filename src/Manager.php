@@ -9,14 +9,24 @@ use Bethropolis\PluginSystem\LifeCycle;
 class Manager
 {
     private static $pluginsDir;
-    private static $configFile = __DIR__ . '/config/config.json';
+    private static $configFile;
     private static $config;
 
     private static $lifeCycle;
-    public static function initialize($dir = null)
+    /**
+     * @param string|null $dir The plugins directory.
+     * @param string|null $configFile Path to store the plugins config.json.
+     */
+    public static function initialize($dir = null, $configFile = null)
     {
         $pluginsDir = $dir ?? System::getPluginsDir();
         self::setPluginsDir($pluginsDir);
+        
+        // Default to a folder in the host app if not provided, avoiding __DIR__
+        self::$configFile = $configFile ?? sys_get_temp_dir() . '/plugin_system_config.json';
+        
+        System::setConfigFile(self::$configFile); // Sync config path with System
+        
         self::$config = self::loadConfig();
         self::$lifeCycle = new LifeCycle();
     }

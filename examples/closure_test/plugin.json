@@ -1,0 +1,5 @@
+{
+    "name": "closure_test",
+    "version": "1.0.0",
+    "description": "Tests if the system can handle anonymous functions safely."
+}

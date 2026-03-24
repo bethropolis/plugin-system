@@ -1,73 +1,30 @@
 <?php
-
-// This is a manual test
-
 require_once "vendor/autoload.php";
-;
 
 use Bethropolis\PluginSystem\System;
 use Bethropolis\PluginSystem\Manager;
-use Bethropolis\PluginSystem\LifeCycle;
-use Bethropolis\PluginSystem\Info;
-
 
 $dir = __DIR__ . "/examples/";
+
+// Initialize the updated Manager (with the dynamic config path)
+Manager::initialize($dir, __DIR__ . '/plugin_config.json');
 System::loadPlugins($dir);
 
-Manager::initialize($dir);
+echo "<h3>Testing Text Modifier (Hook)</h3>";
+$formatted = System::executeHook('format_output_text', null, "this should be uppercase");
+// Because executeHook returns an array of responses from all plugins attached:
+print_r($formatted);
 
+echo "<h3>Testing Logger (Event)</h3>";
+// This won't return anything visible, but it will trigger the error_log in the Logger plugin
+System::triggerEvent('user_login', 'bethropolis');
+echo "Event triggered. Check your PHP error log.";
 
-$info = new Info();
-$life = new LifeCycle();
-Manager::installPlugin("http://localhost/compresed/addition/addition.zip");
-//Manager::uninstallPlugin("addition");
+echo "<h3>Testing Closures (Bug Fix Verification)</h3>";
+$closureResult = System::executeHook('test_closure_hook', null, 'Alice');
+print_r($closureResult);
 
-function echoNewLine($type = null)
-{
-    echo "<br> --- {$type} ---:";
-}
-
-function echoItem($item, $color,$text = null)
-{
-    echo "<br/>";
-    echo "<span style='color: {$color}'>{$item} </span>";
-    print_r($text);
-}
-
-echoItem(Manager::pluginExists("addition"), "red");
-echoItem(Manager::pluginExists("singlefileplugin"), "green");
-echoItem(Manager::togglePlugin("addition"), "green");
-echoItem(Manager::isPluginActive("singlefileplugin"), "blue");
-
-$item = System::executeHook('my_hook', null, "john");
-
-
-
-system::registerEvent("file_upload");
-System::addAction("file_upload", function ($item) {
-    return ($item);
-});
-
-$addition = System::executeHook("calculate_addition", null, 4,5);
-
-$event = System::triggerEvent("file_upload", "how are you");
-
-$plugins = System::getPlugins();
-
-$items = System::executeHooks(["other_hook", "test_hook"], null, "john", "doe");
-
-$hooks = System::getHooks();
-
-$info->refreshPlugins();
-
-echoItem("info", "red",json_encode($info->getPlugins()));
-
-echoItem("item","orange",$item);
-echoItem("items","red",$items);
-echoItem("addition", "aqua", $addition);
-
-echoItem("plugins", "blue", $plugins);
-echoItem("hooks", "green", $hooks);
-
-
-
+echo "<h3>Testing String Function Callback</h3>";
+// Passes "hello world" to strtoupper
+$stringResult = System::executeHook('test_string_hook', null, 'hello world');
+print_r($stringResult);

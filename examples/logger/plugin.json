@@ -1,0 +1,5 @@
+{
+    "name": "logger",
+    "version": "1.0.0",
+    "description": "Listens to events and writes to a log."
+}

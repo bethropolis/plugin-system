@@ -16,7 +16,7 @@ class System
 
     private static $events = array();
 
-    private static $configFile = __DIR__ . '/config/config.json';
+    private static $configFile;
 
     private static $config;
 
@@ -64,6 +64,11 @@ class System
     public static function getHooks()
     {
         return self::$hooks;
+    }
+
+    public static function setConfigFile($filePath)
+    {
+        self::$configFile = $filePath;
     }
 
 
@@ -141,7 +146,7 @@ class System
      *
      * @return bool
      */
-    public static function linkPluginToHook($hook, $callback)
+    public static function linkPluginToHook(string $hook, callable $callback): bool
     {
         if (!isset(self::$plugins[$hook])) {
             self::$hooks[$hook] = array();
@@ -166,11 +171,17 @@ class System
         $plugin_status = isset(self::$config["activated_plugins"]) ? self::$config["activated_plugins"] : false;
         if (isset(self::$plugins[$hook])) {
             foreach (self::$plugins[$hook] as $callback) {
-                $callbackPluginName = get_class($callback[0]);
+                // Safely determine if the callback belongs to a plugin class instance
+                $callbackPluginName = (is_array($callback) && is_object($callback[0])) 
+                    ? get_class($callback[0]) 
+                    : 'Closure';
 
-                $checkName = stripslashes(strtolower($callbackPluginName));
-                if ($plugin_status && isset(self::$config["activated_plugins"][$checkName]) && $plugin_status[$checkName] === false) {
-                    continue;
+                // Only check activation status if it's tied to a specific plugin class
+                if ($callbackPluginName !== 'Closure') {
+                    $checkName = stripslashes(strtolower($callbackPluginName));
+                    if ($plugin_status && isset(self::$config["activated_plugins"][$checkName]) && $plugin_status[$checkName] === false) {
+                        continue;
+                    }
                 }
 
                 if ($pluginName === null || $pluginName === $callbackPluginName) {

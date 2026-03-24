@@ -21,8 +21,8 @@ class Autoloader
             }
             return false;
         } catch (\Exception $e) {
-            // Handle the exception here
-            return false;
+            Error::handleException($e);
+            throw $e; // Re-throw so the developer sees the syntax/fatal error
         }
     }
 
@@ -45,8 +45,8 @@ class Autoloader
                 return false;
             }
         } catch (\Exception $e) {
-            // Handle the exception here
-            return false;
+            Error::handleException($e);
+            throw $e;
         }
     }
 }

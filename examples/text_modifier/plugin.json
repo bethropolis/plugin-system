@@ -1,0 +1,6 @@
+{
+    "name": "text_modifier",
+    "version": "1.0.0",
+    "author": "Bethropolis",
+    "description": "Demonstrates modifying text via hooks."
+}

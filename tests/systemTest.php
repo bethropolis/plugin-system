@@ -102,4 +102,59 @@ class SystemTest extends TestCase
         $this->assertSame($items[0], "Callback 1 executed");
         $this->assertSame($items[1], "Callback 2 executed");
     }
+
+    public function testAdditionPluginHook()
+    {
+        System::setPluginsDir(self::$dir);
+        System::loadPlugins();
+
+        $result = System::executeHook('calculate_addition', null, 3, 7);
+        $this->assertIsArray($result);
+        $this->assertSame($result[0], "The sum of 3 and 7 is 10");
+    }
+
+    public function testTextModifierHook()
+    {
+        System::setPluginsDir(self::$dir);
+        System::loadPlugins();
+
+        $result = System::executeHook('format_output_text', null, "hello world");
+        $this->assertIsArray($result);
+        $this->assertSame($result[0], "HELLO WORLD");
+    }
+
+    public function testClosureHook()
+    {
+        System::setPluginsDir(self::$dir);
+        System::loadPlugins();
+
+        $result = System::executeHook('test_closure_hook', null, 'Alice');
+        $this->assertIsArray($result);
+        $this->assertSame($result[0], "Hello from an anonymous function, Alice!");
+    }
+
+    public function testStringFunctionHook()
+    {
+        System::setPluginsDir(self::$dir);
+        System::loadPlugins();
+
+        // call_user_func passes $args (an array) as the first argument.
+        // Built-in PHP functions like strtoupper expect a string, not an array,
+        // so this triggers a TypeError. We verify the system doesn't silently swallow it.
+        $this->expectException(\TypeError::class);
+        System::executeHook('test_string_hook', null, 'hello world');
+    }
+
+    public function testLoggerEvent()
+    {
+        System::clearEvents();
+        System::registerEvent('user_login');
+        $triggered = false;
+        System::addAction('user_login', function ($username) use (&$triggered) {
+            $triggered = true;
+        });
+
+        System::triggerEvent('user_login', 'testuser');
+        $this->assertTrue($triggered);
+    }
 }
